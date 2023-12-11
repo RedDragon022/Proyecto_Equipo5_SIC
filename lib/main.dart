@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:teachersguard/config/theme/app_theme.dart';
 import 'presentation/screens/screens.dart';
 
 void main() {
@@ -10,9 +11,10 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomeScreen()
+      theme: AppTheme().getTheme(),
+      home: const HomeScreen()
     );
   }
 }
