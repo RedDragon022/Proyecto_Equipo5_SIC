@@ -16,17 +16,30 @@ namespace TeachersGuardAPI.Presentation.Controllers.User
         }
 
         [HttpPost("create")]
-        public async Task<ActionResult<UserDtoOut>> CreateUser(UserDtoIn UserDto)
+        public async Task<IActionResult> CreateUser(CreateUserDto userDto)
         {
-            var userId = await _userUseCase.CreateUserAsync(UserDto);
+            var userId = await _userUseCase.CreateUserAsync(userDto);
 
             if (userId == null)
             {
-                StatusCode(500, new UserDtoOut { Message = "Error creating user" });
+               return StatusCode(500, new { Message = "Error creating user" });
             }
 
-            var userDtoOut = new UserDtoOut { Message = "User created successfully", UserId = userId };
-            return Ok(userDtoOut);
+            return CreatedAtAction(nameof(CreateUser), new { id = userId});
         }
+
+        [HttpGet("get")]
+        public async Task<ActionResult<UserDtoOut?>> GetUser([FromQuery] UserDtoIn userDto)
+        {
+            var user = await _userUseCase.GetUserAsync(userDto);
+
+            if (user != null)
+            {
+                return Ok(user);
+            }
+
+            return Unauthorized("Wrong credentials");
+        }
+
     }
 }

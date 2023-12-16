@@ -15,6 +15,8 @@ builder.Services.AddSingleton<MongoContext>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
+builder.Services.AddScoped<UserUseCase>();
+
 
 builder.Services.AddLogging();
 

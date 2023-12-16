@@ -28,11 +28,27 @@ namespace TeachersGuardAPI.Infraestructure.Mappers
 
         public static User MapUserDTOInToUserEntity(UserDtoIn userDto) => new()
         {
-            EmailOrEmployeeNumber = userDto.EmailOrEmployeeNumber,
-            FaceImage = userDto.FaceImage,
-            Name = userDto.Name,
-            Password = userDto.Password,
-            Surnames= userDto.Surnames,
+          EmailOrEmployeeNumber = userDto.EmailOrEmployeeNumber,
+          Password = userDto.Password
+        };
+
+        public static User MapCreateUserDtoToUserEntity(CreateUserDto createUserDto) => new()
+        {
+            EmailOrEmployeeNumber = createUserDto.EmailOrEmployeeNumber,
+            FaceImage = createUserDto.FaceImage,
+            Name = createUserDto.Name,
+            Password = createUserDto.Password,
+            Surnames = createUserDto.Surnames,
+        };
+
+        public static UserDtoOut MapUserEntityToUserDtoOut(User user) => new()
+        {
+            AttendaceNumber = user.AttendaceNumber,
+            EmailOrEmployeeNumber = user.EmailOrEmployeeNumber,
+            FaceImage = user.FaceImage,
+            Id = user.Id,
+            Name = user.Name,
+            Surnames = user.Surnames
         };
     }
 }
