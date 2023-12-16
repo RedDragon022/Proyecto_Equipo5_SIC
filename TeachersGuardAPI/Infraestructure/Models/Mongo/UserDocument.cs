@@ -8,18 +8,27 @@ namespace TeachersGuardAPI.Infraestructure.Models.Mongo
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId Id { get; set; }
+
         [BsonElement("name")]
-
         public required string Name { get; set; }
-        [BsonElement("face_image")]
 
+        [BsonElement("email_or_employee_number")]
+        public required string EmailOrEmployeeNumber { get; set; }
+
+        [BsonElement("surnames")]
+        public required string Surnames { get; set; }
+
+        [BsonElement("face_image")]
         public required string FaceImage { get; set; }
+
         [BsonElement("password")]
         public required string Password { get; set; }
-
      
         [BsonElement("assigned_classes")]
         public List<ObjectId>? AssignedClasses { get; set; }
+
+        [BsonElement("attendace_number")]
+        public long AttendaceNumber { get; set; }
 
     }
 }
