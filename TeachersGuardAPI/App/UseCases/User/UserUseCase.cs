@@ -1,5 +1,5 @@
 ﻿using System.Net;
-using TeachersGuardAPI.App.DTOs;
+using TeachersGuardAPI.App.DTOs.User;
 using TeachersGuardAPI.Config.helpers;
 using TeachersGuardAPI.Domain.Repositories;
 using TeachersGuardAPI.Infraestructure.Mappers;
@@ -35,6 +35,11 @@ namespace TeachersGuardAPI.App.UseCases.User
             }
 
             return UserMapper.MapUserEntityToUserDtoOut(userFounded);
+        }
+
+        public async Task<bool> FindUserById(string userId)
+        {
+            return await _userRepository.IsExistUserById(userId);
         }
     }
 }

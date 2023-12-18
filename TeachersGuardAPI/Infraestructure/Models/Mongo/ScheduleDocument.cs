@@ -10,14 +10,16 @@ namespace TeachersGuardAPI.Infraestructure.Models.Mongo
         public ObjectId Id { get; set; }
 
         [BsonElement("day_of_week")]
-        public DayOfWeek DayOfWeek { get; set; }
+        public required List<DayOfWeek> DayOfWeek { get; set; }
         [BsonElement("start")]
         public required string StartTime { get; set; }
         [BsonElement("end")]
         public required string EndTime { get; set; }
 
-        [BsonRepresentation(BsonType.ObjectId)]
-        [BsonElement("class_id")]
-        public ObjectId ClassId { get; set; }
+        [BsonElement("user_id")]
+        public required string UserId { get; set; }
+
+        [BsonElement("place_id")]
+        public required string PlaceId { get; set; }
     }
 }

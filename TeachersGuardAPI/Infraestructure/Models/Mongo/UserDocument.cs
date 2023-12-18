@@ -27,7 +27,7 @@ namespace TeachersGuardAPI.Infraestructure.Models.Mongo
         [BsonElement("assigned_classes")]
         public List<ObjectId>? AssignedClasses { get; set; }
 
-        [BsonElement("attendace_number")]
+        [BsonElement("attendance_number")]
         public long AttendaceNumber { get; set; }
 
     }

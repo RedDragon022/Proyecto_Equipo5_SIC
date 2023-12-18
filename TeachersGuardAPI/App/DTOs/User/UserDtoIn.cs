@@ -1,4 +1,4 @@
-﻿namespace TeachersGuardAPI.App.DTOs
+﻿namespace TeachersGuardAPI.App.DTOs.User
 {
     public class UserDtoIn
     {

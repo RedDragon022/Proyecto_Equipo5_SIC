@@ -8,10 +8,10 @@ namespace TeachersGuardAPI.Infraestructure.Models.Mongo
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId Id { get; set; }
-        [BsonElement("professor_id")]
+        [BsonElement("user_id")]
 
         [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId ProfessorId { get; set; }
+        public ObjectId UserId { get; set; }
         [BsonElement("entry_date")]
 
         public DateTime EntryDate { get; set; }

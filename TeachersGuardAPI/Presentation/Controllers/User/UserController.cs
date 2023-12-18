@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TeachersGuardAPI.App.DTOs;
+using TeachersGuardAPI.App.DTOs.User;
 using TeachersGuardAPI.App.UseCases.User;
-using TeachersGuardAPI.Domain.Entities;
 
 namespace TeachersGuardAPI.Presentation.Controllers.User
 {

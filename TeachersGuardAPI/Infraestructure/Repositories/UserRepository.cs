@@ -26,7 +26,7 @@ namespace TeachersGuardAPI.Infraestructure.Repositories
                 await _context.Users.InsertOneAsync(userToDb);
                 
                 var userId = userToDb.Id.ToString(); 
-                _logger.LogInformation("User created successfully with ID: " + userId);
+                _logger.LogInformation("User created successfully with ID: " + userId);             
 
                 return userId;
             }
@@ -57,6 +57,8 @@ namespace TeachersGuardAPI.Infraestructure.Repositories
 
         public async Task<bool> IsExistUserById(string userId)
         {
+            _logger.LogInformation("Finding user with EmailOrEmployeeNumber: " + userId);
+
             var filter = Builders<UserDocument>.Filter.Eq(u => u.Id.ToString(), userId);
 
             var userCount = await _context.Users.CountDocumentsAsync(filter);

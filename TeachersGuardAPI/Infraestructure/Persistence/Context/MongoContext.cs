@@ -19,8 +19,8 @@ namespace TeachersGuardAPI.Infraestructure.Persistence.Context
 
         public IMongoDatabase GetDatabase => _database;
         public IMongoCollection<UserDocument> Users => GetDatabase.GetCollection<UserDocument>("users");
-        public IMongoCollection<AttendanceDocument> Attendance => GetDatabase.GetCollection<AttendanceDocument>("attendance");
-        public IMongoCollection<ClassDocument> Tuition => GetDatabase.GetCollection<ClassDocument>("tuition");
+        public IMongoCollection<AttendanceDocument> Attendances => GetDatabase.GetCollection<AttendanceDocument>("attendance");
+        public IMongoCollection<PlaceDocument> Places => GetDatabase.GetCollection<PlaceDocument>("places");
         public IMongoCollection<ScheduleDocument> Schedules => GetDatabase.GetCollection<ScheduleDocument>("schedules");
     }
 }

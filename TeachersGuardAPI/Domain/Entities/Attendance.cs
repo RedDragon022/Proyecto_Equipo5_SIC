@@ -4,8 +4,8 @@
     {
         public DateTime EntryDate { get; set; }
         public DateTime ExitDate { get; set; }
-        public Guid UserId { get; set; }
-        public bool FullAttendance { get; set; }
-        public required Place Place { get; set; } 
+        public required string UserId { get; set; }
+        public bool FullAttendance { get; set; } = false;
+        public required string PlaceId { get; set; } 
     }
 }

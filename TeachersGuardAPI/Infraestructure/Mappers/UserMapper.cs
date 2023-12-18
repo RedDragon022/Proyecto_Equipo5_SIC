@@ -1,4 +1,4 @@
-﻿using TeachersGuardAPI.App.DTOs;
+﻿using TeachersGuardAPI.App.DTOs.User;
 using TeachersGuardAPI.Domain.Entities;
 using TeachersGuardAPI.Infraestructure.Models.Mongo;
 

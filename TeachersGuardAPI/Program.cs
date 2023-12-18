@@ -1,3 +1,4 @@
+using TeachersGuardAPI.App.UseCases.Schedule;
 using TeachersGuardAPI.App.UseCases.User;
 using TeachersGuardAPI.Config.constants;
 using TeachersGuardAPI.Domain.Repositories;
@@ -14,8 +15,11 @@ builder.Services.Configure<MongoConfig>(builder.Configuration.GetSection("MongoS
 builder.Services.AddSingleton<MongoContext>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAttendanceRepository, AttendanceRepository>();
+builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
 
 builder.Services.AddScoped<UserUseCase>();
+builder.Services.AddScoped<ScheduleUseCase>();
 
 
 builder.Services.AddLogging();
