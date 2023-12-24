@@ -1,3 +1,4 @@
+using TeachersGuardAPI.App.UseCases.PlaceUseCase;
 using TeachersGuardAPI.App.UseCases.Schedule;
 using TeachersGuardAPI.App.UseCases.User;
 using TeachersGuardAPI.Config.constants;
@@ -17,9 +18,11 @@ builder.Services.AddSingleton<MongoContext>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAttendanceRepository, AttendanceRepository>();
 builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
+builder.Services.AddScoped<IPlaceRepository,PlaceRepository>();
 
 builder.Services.AddScoped<UserUseCase>();
 builder.Services.AddScoped<ScheduleUseCase>();
+builder.Services.AddScoped<PlaceUseCase>();
 
 
 builder.Services.AddLogging();

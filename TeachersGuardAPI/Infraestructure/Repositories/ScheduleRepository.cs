@@ -10,8 +10,8 @@ namespace TeachersGuardAPI.Infraestructure.Repositories
     public class ScheduleRepository : IScheduleRepository
     {
         private readonly MongoContext _context;
-        private readonly ILogger<UserRepository> _logger;
-        public ScheduleRepository(MongoContext context, ILogger<UserRepository> logger) 
+        private readonly ILogger<ScheduleRepository> _logger;
+        public ScheduleRepository(MongoContext context, ILogger<ScheduleRepository> logger) 
         {
             _context = context;
             _logger = logger;
