@@ -6,6 +6,7 @@
         public DateTime ExitDate { get; set; }
         public required string UserId { get; set; }
         public bool FullAttendance { get; set; } = false;
-        public required string PlaceId { get; set; } 
+        public required string PlaceId { get; set; }
+        public string AttendanceId { get; set; } = "";
     }
 }

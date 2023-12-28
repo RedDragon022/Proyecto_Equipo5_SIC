@@ -23,7 +23,7 @@ namespace TeachersGuardAPI.Infraestructure.Mappers
             Id = userDocument.Id.ToString(),
             Password = userDocument.Password,
             Surnames = userDocument.Surnames,
-            AttendaceNumber = userDocument.AttendaceNumber
+            IsAdmin = userDocument.IsAdmin
         };
 
         public static User MapUserDTOInToUserEntity(UserDtoIn userDto) => new()
@@ -43,7 +43,7 @@ namespace TeachersGuardAPI.Infraestructure.Mappers
 
         public static UserDtoOut MapUserEntityToUserDtoOut(User user) => new()
         {
-            AttendaceNumber = user.AttendaceNumber,
+            IsAdmin = user.IsAdmin,
             EmailOrEmployeeNumber = user.EmailOrEmployeeNumber,
             FaceImage = user.FaceImage,
             Id = user.Id,

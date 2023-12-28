@@ -20,5 +20,10 @@ namespace TeachersGuardAPI.App.UseCases.Schedule
 
             return schedules.Select(ScheduleMapper.MapScheduleEntityToScheduleDto).ToList();
         }
+
+        public async Task<bool> UserHasSchedule(string userId)
+        {
+            return await _scheduleRepository.UserHasSchedule(userId);
+        }
     }
 }

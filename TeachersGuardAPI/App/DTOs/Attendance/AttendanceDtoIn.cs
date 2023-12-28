@@ -1,6 +1,6 @@
 ﻿namespace TeachersGuardAPI.App.DTOs.Attendance
 {
-    public class AttendanceDto
+    public class AttendanceDtoIn
     {
         public required string UserId;
 

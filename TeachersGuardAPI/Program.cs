@@ -1,3 +1,4 @@
+using TeachersGuardAPI.App.UseCases.Attendace;
 using TeachersGuardAPI.App.UseCases.PlaceUseCase;
 using TeachersGuardAPI.App.UseCases.Schedule;
 using TeachersGuardAPI.App.UseCases.User;
@@ -23,6 +24,7 @@ builder.Services.AddScoped<IPlaceRepository,PlaceRepository>();
 builder.Services.AddScoped<UserUseCase>();
 builder.Services.AddScoped<ScheduleUseCase>();
 builder.Services.AddScoped<PlaceUseCase>();
+builder.Services.AddScoped<AttendanceUseCase>();
 
 
 builder.Services.AddLogging();

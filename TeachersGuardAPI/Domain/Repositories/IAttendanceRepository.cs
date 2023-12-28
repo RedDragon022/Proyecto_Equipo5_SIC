@@ -6,6 +6,6 @@ namespace TeachersGuardAPI.Domain.Repositories
     {
         public Task<string?> CreateAttendanceAsync(Attendance attendance);
         public Task<Attendance?> GetAttendanceByUserIdAsync(string userId);
-        public Task UpdateAttendanceAsync(Attendance attendance);
+        public Task<bool?> UpdateAttendanceAsync(string userId);
     }
 }

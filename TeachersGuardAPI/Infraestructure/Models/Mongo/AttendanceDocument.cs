@@ -12,15 +12,16 @@ namespace TeachersGuardAPI.Infraestructure.Models.Mongo
 
         [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId UserId { get; set; }
-        [BsonElement("entry_date")]
 
+        [BsonElement("entry_date")]
         public DateTime EntryDate { get; set; }
+
         [BsonElement("exit_date")]
         public DateTime ExitDate { get; set; }
 
         [BsonRepresentation(BsonType.ObjectId)]
-        [BsonElement("class_id")]
-        public ObjectId ClassId { get; set; }
+        [BsonElement("place_id")]
+        public ObjectId PlaceId { get; set; }
 
         [BsonElement("completed_attendance")]
         public bool IsCompletedAttendance { get; set; }

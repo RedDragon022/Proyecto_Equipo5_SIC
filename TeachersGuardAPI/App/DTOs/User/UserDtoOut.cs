@@ -7,6 +7,6 @@
         public required string Name { get; set; }
         public required string Surnames { get; set; }
         public required string FaceImage { get; set; }
-        public long AttendaceNumber { get; set; }
+        public bool IsAdmin { get; set; }
     }
 }

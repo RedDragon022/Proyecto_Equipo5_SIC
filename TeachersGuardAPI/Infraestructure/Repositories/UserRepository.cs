@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
 using TeachersGuardAPI.Domain.Entities;
 using TeachersGuardAPI.Domain.Repositories;
 using TeachersGuardAPI.Infraestructure.Mappers;
@@ -59,7 +60,7 @@ namespace TeachersGuardAPI.Infraestructure.Repositories
         {
             _logger.LogInformation("Finding user with EmailOrEmployeeNumber: " + userId);
 
-            var filter = Builders<UserDocument>.Filter.Eq(u => u.Id.ToString(), userId);
+            var filter = Builders<UserDocument>.Filter.Eq(u => u.Id, ObjectId.Parse(userId));
 
             var userCount = await _context.Users.CountDocumentsAsync(filter);
 

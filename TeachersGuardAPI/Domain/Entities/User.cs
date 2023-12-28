@@ -8,6 +8,6 @@
         public string Password { get; set; } = "";
         public string Surnames { get; set; } = "";
         public string FaceImage { get; set; } = "";
-        public long AttendaceNumber { get; set; }
+        public bool IsAdmin { get; set; }
     }
 }

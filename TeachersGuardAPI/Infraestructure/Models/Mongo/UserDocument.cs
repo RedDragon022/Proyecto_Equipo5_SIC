@@ -24,11 +24,8 @@ namespace TeachersGuardAPI.Infraestructure.Models.Mongo
         [BsonElement("password")]
         public required string Password { get; set; }
      
-        [BsonElement("assigned_classes")]
-        public List<ObjectId>? AssignedClasses { get; set; }
-
-        [BsonElement("attendance_number")]
-        public long AttendaceNumber { get; set; }
+        [BsonElement("is_admin")]
+        public bool IsAdmin { get; set; }
 
     }
 }

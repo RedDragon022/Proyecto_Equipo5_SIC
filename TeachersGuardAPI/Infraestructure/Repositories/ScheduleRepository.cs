@@ -33,5 +33,16 @@ namespace TeachersGuardAPI.Infraestructure.Repositories
             return null;
         }
 
+        public async Task<bool> UserHasSchedule(string userId)
+        {
+            _logger.LogInformation("Checking if user with UserId: " + userId + " has schedules");
+
+            var filter = Builders<ScheduleDocument>.Filter.Eq(u => u.UserId, userId);
+
+            var scheduleCount = await _context.Schedules.CountDocumentsAsync(filter);
+
+            return scheduleCount > 0;
+        }
+
     }
 }
