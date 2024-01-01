@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../widgets.dart';
@@ -28,7 +29,7 @@ class LoginForm extends StatelessWidget {
           CustomTextButton(
               text: 'Restablecer contraseña', onPressed: () => null),
           const SizedBox(height: 20),
-          CustomRectangleButton(text: 'Ingresar', onPressed: () => null),
+          CustomRectangleButton(text: 'Ingresar', onPressed: () => context.go('/')),
           const SizedBox(height: 40),
           _CreateAccountRow(textStyle: textStyle)
         ],
@@ -56,7 +57,7 @@ class _CreateAccountRow extends StatelessWidget {
                   FontWeight.w400, // O FontWeight.bold para negrita
             )),
         const SizedBox(width: 8),
-        CustomTextButton(text: 'Registrarse', onPressed: () => null)
+        CustomTextButton(text: 'Registrarse', onPressed: () => context.go('/register'))
       ],
     );
   }

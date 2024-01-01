@@ -4,6 +4,7 @@ import '../../../config/constants/assets_conts.dart';
 import '../../widgets/widgets.dart';
 
 class RegisterScreen extends StatelessWidget {
+  static String name = 'register-screen';
   const RegisterScreen({super.key});
 
   @override
@@ -19,7 +20,7 @@ class _RegisterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     final scaffoldBackgroundColor = Theme.of(context).scaffoldBackgroundColor;
+    final scaffoldBackgroundColor = Theme.of(context).scaffoldBackgroundColor;
     final size = MediaQuery.of(context).size;
     return Stack(
       children: [
@@ -33,7 +34,7 @@ class _RegisterView extends StatelessWidget {
           colorBlendMode: BlendMode.multiply,
         ),
         SingleChildScrollView(
-          physics: ClampingScrollPhysics(),
+          physics: const ClampingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [

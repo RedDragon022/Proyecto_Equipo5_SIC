@@ -4,6 +4,7 @@ import 'package:teachersguard/config/constants/assets_conts.dart';
 import '../../widgets/widgets.dart';
 
 class LoginScreen extends StatelessWidget {
+  static String name = 'login-screen';
   const LoginScreen({super.key});
 
   @override
@@ -44,8 +45,7 @@ class _LoginView extends StatelessWidget {
                     const BorderRadius.only(topLeft: Radius.circular(100)),
               ),
               child: const SingleChildScrollView(
-                  physics: BouncingScrollPhysics(), 
-                  child: LoginForm()),
+                  physics: BouncingScrollPhysics(), child: LoginForm()),
             )
           ],
         )
