@@ -15,9 +15,8 @@ class HeaderHome extends StatelessWidget {
 
     return Container(
       height: deviceHeight / 8,
-      color: const Color(0xFFF7F7F7),
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      padding: const EdgeInsets.only(bottom: 10),
+      color: const Color.fromARGB(255, 218, 218, 218),
+      padding: const EdgeInsets.only(bottom: 10, left: 20, right: 20),
       alignment: Alignment.bottomCenter,
       child: _WelcomeText(
           textStyle: (deviceWidth < 300)
