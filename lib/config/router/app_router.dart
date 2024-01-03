@@ -25,7 +25,10 @@ final appRouter = GoRouter(
           path: '/',
           builder: (context, state) => const HomeView(),
         ),
-        //GoRoute(path: '/')
+        GoRoute(
+          path: '/schedule',
+          builder: (context, state) => const ScheduleScreen(),
+        )
       ]
     )
     
