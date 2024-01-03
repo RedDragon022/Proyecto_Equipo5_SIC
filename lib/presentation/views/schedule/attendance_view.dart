@@ -14,6 +14,7 @@ class AttendanceView extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: DataTable(
+        
         columns: const [
           DataColumn(label: Text('Clases')),
           DataColumn(label: Text('Entrada')),

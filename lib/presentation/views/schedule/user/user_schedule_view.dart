@@ -1,6 +1,7 @@
-import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:teachersguard/presentation/views/schedule/attendance_view.dart';
+
+import '../../views.dart';
 
 class UserScheduleView extends StatelessWidget {
   const UserScheduleView({super.key});
@@ -8,6 +9,7 @@ class UserScheduleView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const _CustomSlidingSegmentedControl(),
         const SizedBox(height: 20),
@@ -42,25 +44,19 @@ class _CustomSlidingSegmentedControlState
 
   @override
   Widget build(BuildContext context) {
-    final deviceWidth = MediaQuery.of(context).size.width;
 
-    final decoration = BoxDecoration(
-      borderRadius: BorderRadius.circular(20),
-      color: Colors.grey
-    );
-
-    return CustomSlidingSegmentedControl(
-      fixedWidth: deviceWidth / 3,
-      decoration: decoration,
-      thumbDecoration: decoration.copyWith(color: Colors.white),
-      children: const {0: Text('Horario'), 1: Text('Asistencias')},
-      initialValue: _sliding,
-      onValueChanged: (index) {
-        setState(() {
-          _sliding = index;
-          getCurrentView(_sliding);
-        });
-      },
+    return SizedBox(
+      width: double.infinity,
+      child: CupertinoSlidingSegmentedControl(
+        children: const {0: Text('Horario'), 1: Text('Asistencias')},
+        groupValue: _sliding,
+        onValueChanged: (index) {
+          setState(() {
+            _sliding = index;
+            getCurrentView(_sliding);
+          });
+        },
+      ),
     );
   }
 }
