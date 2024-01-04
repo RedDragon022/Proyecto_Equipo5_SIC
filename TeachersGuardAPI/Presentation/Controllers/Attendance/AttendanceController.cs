@@ -30,12 +30,12 @@ namespace TeachersGuardAPI.Presentation.Controllers.Attendace
         
             var isUserExists = await _userUseCase.FindUserById(userId);
 
-            if (!isUserExists) return BadRequest(new { Message = "User not found" });
+            if (!isUserExists) return BadRequest(new { Message = "Usuario no encontrado" });
 
           
             var userHasSchedule = await _scheduleUseCase.UserHasSchedule(userId);
 
-            if (!userHasSchedule) return BadRequest(new { Message = "This user doesn't have some schedule" });
+            if (!userHasSchedule) return BadRequest(new { Message = "Este usuario no tiene algun horario registrado" });
 
 
             var attendance = await _attendanceUseCase.RegisterEntryAttendance(userId);
@@ -55,15 +55,15 @@ namespace TeachersGuardAPI.Presentation.Controllers.Attendace
 
             var isUserExists = await _userUseCase.FindUserById(userId);
 
-            if (!isUserExists) return BadRequest(new { Message = "User not found" });
+            if (!isUserExists) return BadRequest(new { Message = "Usuario no encontrado" });
 
-            var isAttendanceSaved = await _attendanceUseCase.RegisterExitAttendanceByUserId(userId);
+            var attendanceResult = await _attendanceUseCase.RegisterExitAttendanceByUserId(userId);
 
-            if (isAttendanceSaved == null) return Conflict(new {Message = "In this time can't be registered exit attendance, because this not in range"});
+            if (attendanceResult == null) return Ok(new { Message = "El registro de salida fue guardado exitosamente" });
 
-            if ((bool)!isAttendanceSaved) return StatusCode(500, new { Message = "Error while saving the exit attendance, try later" });
+            return Conflict(new { Message = attendanceResult });
 
-            return Ok(new {Message = "Exit attendance was saved successfully"});
+            
         }
     }
 }

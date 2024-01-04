@@ -24,20 +24,18 @@ namespace TeachersGuardAPI.App.UseCases.Attendace
         {
             var attendancesAlreadyExist = await GetAttendanceByUserIdAndInRangeTime(userId);
 
-
-
             if (attendancesAlreadyExist != null)
-                return new AttendanceDtoOut { ErrorMessage = "This user has already an attendance for entry" };
+                return new AttendanceDtoOut { ErrorMessage = "Este usuario ya tiene registrado la entrada para esta hora" };
 
             var schedules = await _scheduleRepository.GetSchedulesByUserId(userId);
 
             var scheduleInTimeRange = schedules?
             .Where(schedule => DateHelper.IsCurrentTimeInRange(DateTime.Now, schedule.Start, schedule.End) 
-            && schedule.DayOfWeek.Contains(DateTime.Now.DayOfWeek))
+            /*&& schedule.DayOfWeek.Contains(DateTime.Now.DayOfWeek)*/)
             .FirstOrDefault();
 
             if (scheduleInTimeRange == null)
-                return new AttendanceDtoOut { ErrorMessage = "This user doesn't have some activity for this day or hour" };
+                return new AttendanceDtoOut { ErrorMessage = "Este usuario no tiene alguna actividad para esta hora o dia" };
 
             var attendance = new Attendance 
             {
@@ -49,27 +47,34 @@ namespace TeachersGuardAPI.App.UseCases.Attendace
 
             var attendanceResponse = await _attendanceRepository.CreateAttendanceAsync(attendance);
 
-            if (attendanceResponse == null) return new AttendanceDtoOut { ErrorMessage = "The entry can't be saved"};
+            if (attendanceResponse == null) return new AttendanceDtoOut { ErrorMessage = "La entrada no ha podido ser guardada"};
 
             attendance.AttendanceId = attendanceResponse;
             
 
             var attendanceDto = AttendanceMapper.MapAttendanceEntityToAttendanceDtoOut(attendance);
 
-            attendanceDto.Message = "The entry has been saved";
+            attendanceDto.Message = "La entrada ha sido guardada";
 
             return attendanceDto;
             
         }
 
-        public async Task<bool?> RegisterExitAttendanceByUserId(string userId)
+        public async Task<string?> RegisterExitAttendanceByUserId(string userId)
         {
 
             var attendanceInRangeTime = await GetAttendanceByUserIdAndInRangeTime(userId);
 
-            if (attendanceInRangeTime == null) return null;
+            if (attendanceInRangeTime == null) 
+                return "No se puede generar el registro de salida, porque no le toca en esta hora o no registro su entrada";
 
-            return await _attendanceRepository.UpdateAttendanceAsync(attendanceInRangeTime);
+            if (attendanceInRangeTime.FullAttendance) return "Este usuario ya tiene un registro de salida para esta hora";
+
+            var result = await _attendanceRepository.UpdateAttendanceAsync(attendanceInRangeTime);
+
+            if (!result) return "El registro de salida no pudo ser guardado";
+
+            return null;
         }
 
         private async Task<Attendance?> GetAttendanceByUserIdAndInRangeTime(string userId)

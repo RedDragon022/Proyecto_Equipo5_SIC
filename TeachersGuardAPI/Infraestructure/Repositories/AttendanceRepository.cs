@@ -59,6 +59,7 @@ namespace TeachersGuardAPI.Infraestructure.Repositories
             _logger.LogInformation("Updating attendance for user with ID: " + attendance.UserId);
             try
             {
+                Console.WriteLine(attendance.AttendanceId);
 
                 // Realiza las operaciones de actualización necesarias con las asistencias en el rango de tiempo actual
                 attendance.FullAttendance = true;
@@ -66,7 +67,9 @@ namespace TeachersGuardAPI.Infraestructure.Repositories
 
                 var updatingAttendanceDb = AttendanceMapper.MapAttendanceEntityToAttendanceDocument(attendance);
 
-                var filter = Builders<AttendanceDocument>.Filter.Eq(u => u.Id, updatingAttendanceDb.Id);
+                updatingAttendanceDb.Id = ObjectId.Parse(attendance.AttendanceId);
+
+                var filter = Builders<AttendanceDocument>.Filter.Eq(attendance => attendance.Id, updatingAttendanceDb.Id);
 
                 // Actualiza la asistencia en la base de datos
                 var updateResult = await _context.Attendances.ReplaceOneAsync(filter, updatingAttendanceDb);
