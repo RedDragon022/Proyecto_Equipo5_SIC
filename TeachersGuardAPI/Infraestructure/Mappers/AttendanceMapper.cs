@@ -16,11 +16,14 @@ namespace TeachersGuardAPI.Infraestructure.Mappers
             IsCompletedAttendance = attendance.FullAttendance
         };
 
-        public static AttendanceDtoOut MapAttendanceEntityToAttendanceDtoOut(Attendance attendance) => new()
+        public static AttendanceDto MapAttendanceEntityToAttendanceDto(Attendance attendance) => new()
         {
             PlaceId = attendance.PlaceId,
             UserId = attendance.UserId,
             AttendanceId = attendance.AttendanceId,
+            EntryDate = attendance.EntryDate,
+            ExitDate = attendance.ExitDate,
+            FullAttendance = attendance.FullAttendance            
         };
 
         public static Attendance MapAttendanceDocumentToAttendanceEntity(AttendanceDocument attendanceDocument) => new()

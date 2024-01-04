@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TeachersGuardAPI.App.DTOs.Attendance;
 using TeachersGuardAPI.App.UseCases.Attendace;
 using TeachersGuardAPI.App.UseCases.Schedule;
 using TeachersGuardAPI.App.UseCases.User;
@@ -38,11 +39,11 @@ namespace TeachersGuardAPI.Presentation.Controllers.Attendace
             if (!userHasSchedule) return BadRequest(new { Message = "Este usuario no tiene algun horario registrado" });
 
 
-            var attendance = await _attendanceUseCase.RegisterEntryAttendance(userId);
+            var attendanceResult = await _attendanceUseCase.RegisterEntryAttendance(userId);
 
-            if (attendance.ErrorMessage != null) return Conflict(new { Message = attendance.ErrorMessage });
+            if (attendanceResult != null) return Conflict(new { Message = attendanceResult });
 
-            return Ok(attendance);
+            return Ok(new { Message = "La entrada ha sido generada exitosamente"});
         }
         
         [HttpPost("register-exit")]
@@ -62,8 +63,19 @@ namespace TeachersGuardAPI.Presentation.Controllers.Attendace
             if (attendanceResult == null) return Ok(new { Message = "El registro de salida fue guardado exitosamente" });
 
             return Conflict(new { Message = attendanceResult });
+        }
 
-            
+        [HttpGet("get-list-attendances")]
+        public async Task<ActionResult<List<AttendanceDto>>?> GetAttendancesByUserId(string userId)
+        {
+            var isUserExists = await _userUseCase.FindUserById(userId);
+
+            if (!isUserExists) return BadRequest(new { Message = "Usuario no encontrado" });
+
+            var attendances = await _attendanceUseCase.GetListAttendancesByUserId(userId);
+
+            return Ok(attendances);
+
         }
     }
 }

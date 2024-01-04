@@ -20,12 +20,12 @@ namespace TeachersGuardAPI.App.UseCases.Attendace
         }
 
 
-        public async Task<AttendanceDtoOut> RegisterEntryAttendance(string userId)
+        public async Task<string?> RegisterEntryAttendance(string userId)
         {
             var attendancesAlreadyExist = await GetAttendanceByUserIdAndInRangeTime(userId);
 
             if (attendancesAlreadyExist != null)
-                return new AttendanceDtoOut { ErrorMessage = "Este usuario ya tiene registrado la entrada para esta hora" };
+                return "Este usuario ya tiene registrado la entrada para esta hora";
 
             var schedules = await _scheduleRepository.GetSchedulesByUserId(userId);
 
@@ -35,7 +35,7 @@ namespace TeachersGuardAPI.App.UseCases.Attendace
             .FirstOrDefault();
 
             if (scheduleInTimeRange == null)
-                return new AttendanceDtoOut { ErrorMessage = "Este usuario no tiene alguna actividad para esta hora o dia" };
+                return "Este usuario no tiene alguna actividad para esta hora o dia";
 
             var attendance = new Attendance 
             {
@@ -47,17 +47,9 @@ namespace TeachersGuardAPI.App.UseCases.Attendace
 
             var attendanceResponse = await _attendanceRepository.CreateAttendanceAsync(attendance);
 
-            if (attendanceResponse == null) return new AttendanceDtoOut { ErrorMessage = "La entrada no ha podido ser guardada"};
+            if (attendanceResponse == null) return "La entrada no ha podido ser guardada";
 
-            attendance.AttendanceId = attendanceResponse;
-            
-
-            var attendanceDto = AttendanceMapper.MapAttendanceEntityToAttendanceDtoOut(attendance);
-
-            attendanceDto.Message = "La entrada ha sido guardada";
-
-            return attendanceDto;
-            
+            return null;
         }
 
         public async Task<string?> RegisterExitAttendanceByUserId(string userId)
@@ -89,6 +81,13 @@ namespace TeachersGuardAPI.App.UseCases.Attendace
             attendance.EntryDate <= currentTime && currentTime <= attendance.EntryDate.AddHours(1));
         } 
 
+        public async Task<List<AttendanceDto>?> GetListAttendancesByUserId(string userId)
+        {
+           var attendances = await _attendanceRepository.GetAllAttendancesByUserIdAsync(userId);
 
+            if (attendances == null) return null;
+
+            return attendances.Select(AttendanceMapper.MapAttendanceEntityToAttendanceDto).ToList();
+        }
     }
 }
