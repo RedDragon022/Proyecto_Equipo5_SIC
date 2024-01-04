@@ -31,7 +31,7 @@ namespace TeachersGuardAPI.App.UseCases.Attendace
 
             var scheduleInTimeRange = schedules?
             .Where(schedule => DateHelper.IsCurrentTimeInRange(DateTime.Now, schedule.Start, schedule.End) 
-            /*&& schedule.DayOfWeek.Contains(DateTime.Now.DayOfWeek)*/)
+            && schedule.DayOfWeek.Contains(DateTime.Now.DayOfWeek))
             .FirstOrDefault();
 
             if (scheduleInTimeRange == null)
