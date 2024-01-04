@@ -22,5 +22,15 @@ namespace TeachersGuardAPI.Infraestructure.Mappers
             UserId = attendance.UserId,
             AttendanceId = attendance.AttendanceId,
         };
+
+        public static Attendance MapAttendanceDocumentToAttendanceEntity(AttendanceDocument attendanceDocument) => new()
+        {
+            AttendanceId = attendanceDocument.Id.ToString(),
+            FullAttendance = attendanceDocument.IsCompletedAttendance,
+            PlaceId = attendanceDocument.PlaceId.ToString(),
+            UserId = attendanceDocument.UserId.ToString(),
+            EntryDate = attendanceDocument.EntryDate,
+            ExitDate = attendanceDocument.ExitDate
+        };
     }
 }

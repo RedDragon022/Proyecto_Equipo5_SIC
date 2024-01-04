@@ -40,9 +40,7 @@ namespace TeachersGuardAPI.Presentation.Controllers.Attendace
 
             var attendance = await _attendanceUseCase.RegisterEntryAttendance(userId);
 
-            if (attendance == null) return Conflict(new { Message = "User can't register the attendance, because it's not the hour" });
-
-            if (!attendance.IsSaved) return StatusCode(500, new { Message = "Error while saving the attendance, try later" });
+            if (attendance.ErrorMessage != null) return Conflict(new { Message = attendance.ErrorMessage });
 
             return Ok(attendance);
         }

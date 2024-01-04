@@ -38,36 +38,38 @@ namespace TeachersGuardAPI.Infraestructure.Repositories
             }
         }
 
-        public Task<Attendance?> GetAttendanceByUserIdAsync(string userId)
+        public async Task<List<Attendance>?> GetAllAttendancesByUserIdAsync(string userId)
         {
-            throw new NotImplementedException();
+            _logger.LogInformation($"Getting all attendances for user with Id : {userId}");    
+
+            var filter = Builders<AttendanceDocument>.Filter.Eq(u => u.UserId, ObjectId.Parse(userId));
+
+            var attendanceDocuments = await _context.Attendances.Find(filter).ToListAsync();
+
+            if (attendanceDocuments != null && attendanceDocuments.Any())
+            {
+                return attendanceDocuments.Select(AttendanceMapper.MapAttendanceDocumentToAttendanceEntity).ToList();
+            }
+
+            return null;
         }
 
-        public async Task<bool?> UpdateAttendanceAsync(string userId)
+        public async Task<bool> UpdateAttendanceAsync(Attendance attendance)
         {
+            _logger.LogInformation("Updating attendance for user with ID: " + attendance.UserId);
             try
             {
-                var currentTime = DateTime.Now;
-                var oneHourLater = currentTime.AddHours(1);
-
-                var filter = Builders<AttendanceDocument>.Filter.And(
-                    Builders<AttendanceDocument>.Filter.Eq(u => u.UserId, ObjectId.Parse(userId)),
-                    Builders<AttendanceDocument>.Filter.Gte(u => u.EntryDate, currentTime),
-                    Builders<AttendanceDocument>.Filter.Lt(u => u.EntryDate, oneHourLater)
-                );
-
-                // Obten la lista de asistencias que cumplen con el filtro
-                var existingAttendance = await _context.Attendances.Find(filter).FirstOrDefaultAsync();
-
-                if (existingAttendance == null)
-                    return null;
 
                 // Realiza las operaciones de actualización necesarias con las asistencias en el rango de tiempo actual
-                existingAttendance.IsCompletedAttendance = true;
-                existingAttendance.ExitDate = DateTime.Now;
+                attendance.FullAttendance = true;
+                attendance.ExitDate = DateTime.Now;
+
+                var updatingAttendanceDb = AttendanceMapper.MapAttendanceEntityToAttendanceDocument(attendance);
+
+                var filter = Builders<AttendanceDocument>.Filter.Eq(u => u.Id, updatingAttendanceDb.Id);
 
                 // Actualiza la asistencia en la base de datos
-                var updateResult = await _context.Attendances.ReplaceOneAsync(filter, existingAttendance);
+                var updateResult = await _context.Attendances.ReplaceOneAsync(filter, updatingAttendanceDb);
 
                 // Verifica si la actualización fue exitosa
                 if (updateResult.IsAcknowledged && updateResult.ModifiedCount > 0)

@@ -19,16 +19,25 @@ namespace TeachersGuardAPI.App.UseCases.Attendace
             _scheduleRepository = scheduleRepository;
         }
 
-        
-        public async Task<AttendanceDtoOut?> RegisterEntryAttendance(string userId)
+
+        public async Task<AttendanceDtoOut> RegisterEntryAttendance(string userId)
         {
+            var attendancesAlreadyExist = await GetAttendanceByUserIdAndInRangeTime(userId);
+
+
+
+            if (attendancesAlreadyExist != null)
+                return new AttendanceDtoOut { ErrorMessage = "This user has already an attendance for entry" };
+
             var schedules = await _scheduleRepository.GetSchedulesByUserId(userId);
 
             var scheduleInTimeRange = schedules?
-            .Where(schedule => DateHelper.IsCurrentTimeInRange(DateTime.Now, schedule.Start, schedule.End) && schedule.DayOfWeek.Contains(DateTime.Now.DayOfWeek))
+            .Where(schedule => DateHelper.IsCurrentTimeInRange(DateTime.Now, schedule.Start, schedule.End) 
+            && schedule.DayOfWeek.Contains(DateTime.Now.DayOfWeek))
             .FirstOrDefault();
 
-            if (scheduleInTimeRange == null) return null;
+            if (scheduleInTimeRange == null)
+                return new AttendanceDtoOut { ErrorMessage = "This user doesn't have some activity for this day or hour" };
 
             var attendance = new Attendance 
             {
@@ -38,16 +47,16 @@ namespace TeachersGuardAPI.App.UseCases.Attendace
                   
             };
 
-            var attendanceId = await _attendanceRepository.CreateAttendanceAsync(attendance);
+            var attendanceResponse = await _attendanceRepository.CreateAttendanceAsync(attendance);
 
-            if (attendanceId == null) return new AttendanceDtoOut { IsSaved = false};
+            if (attendanceResponse == null) return new AttendanceDtoOut { ErrorMessage = "The entry can't be saved"};
 
-            attendance.AttendanceId = attendanceId;
-        
+            attendance.AttendanceId = attendanceResponse;
+            
 
             var attendanceDto = AttendanceMapper.MapAttendanceEntityToAttendanceDtoOut(attendance);
 
-            attendanceDto.IsSaved = true;
+            attendanceDto.Message = "The entry has been saved";
 
             return attendanceDto;
             
@@ -55,8 +64,25 @@ namespace TeachersGuardAPI.App.UseCases.Attendace
 
         public async Task<bool?> RegisterExitAttendanceByUserId(string userId)
         {
-            return await _attendanceRepository.UpdateAttendanceAsync(userId);
+
+            var attendanceInRangeTime = await GetAttendanceByUserIdAndInRangeTime(userId);
+
+            if (attendanceInRangeTime == null) return null;
+
+            return await _attendanceRepository.UpdateAttendanceAsync(attendanceInRangeTime);
         }
+
+        private async Task<Attendance?> GetAttendanceByUserIdAndInRangeTime(string userId)
+        {
+            var attendances = await _attendanceRepository.GetAllAttendancesByUserIdAsync(userId);
+
+            var currentTime = DateTime.UtcNow;
+            var oneHourLater = currentTime.AddHours(1);
+
+            return attendances?
+            .FirstOrDefault(attendance =>
+            attendance.EntryDate <= currentTime && currentTime <= attendance.EntryDate.AddHours(1));
+        } 
 
 
     }
