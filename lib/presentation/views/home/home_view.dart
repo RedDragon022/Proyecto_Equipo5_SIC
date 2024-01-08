@@ -8,7 +8,7 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        HeaderHome(
+        const HeaderHome(
           name: 'Wongyoung',
           imageUrl:
               'https://th.bing.com/th/id/OIP.gGnxYwfTCN_kNeabccBLKwHaJQ?rs=1&pid=ImgDetMain',
@@ -19,7 +19,7 @@ class HomeView extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
               separatorBuilder: (context, index) => const SizedBox(height: 30),
-              itemBuilder: (context, index) => ClassBox(
+              itemBuilder: (context, index) => const ClassBox(
                     classLabel: 'Clase Actual',
                     classRoomLabel: 'Salon 303',
                     hourLabel: '10:00-11:00',

@@ -45,7 +45,9 @@ class _LoginView extends StatelessWidget {
                     const BorderRadius.only(topLeft: Radius.circular(100)),
               ),
               child: const SingleChildScrollView(
-                  physics: BouncingScrollPhysics(), child: LoginForm()),
+                  physics: BouncingScrollPhysics(), 
+                  child: LoginForm()
+                ),
             )
           ],
         )

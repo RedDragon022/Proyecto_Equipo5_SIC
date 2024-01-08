@@ -22,7 +22,10 @@ class LoginForm extends StatelessWidget {
                 fontWeight: FontWeight.w600, // O FontWeight.bold para negrita
               )),
           const SizedBox(height: 30),
-          const CustomTextField(labelText: 'Correo o num de empleado'),
+          const CustomTextField(
+            labelText: 'Correo o num de empleado',
+            
+          ),
           const SizedBox(height: 30),
           const CustomTextField(labelText: 'Contraseña', obscureText: true),
           const SizedBox(height: 20),

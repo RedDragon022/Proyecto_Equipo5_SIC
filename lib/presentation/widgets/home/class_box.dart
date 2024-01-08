@@ -30,7 +30,7 @@ class ClassBox extends StatelessWidget {
     );
 
     return ClipRRect(
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(20),
       child: Container(
         height:  (deviceWidth < 300 ) ? deviceHeight / 2.8 : deviceHeight / 3,
         color: const Color.fromARGB(255, 218, 218, 218),
