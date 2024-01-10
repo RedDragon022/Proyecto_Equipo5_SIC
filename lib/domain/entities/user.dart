@@ -6,10 +6,9 @@ class User {
   final bool isAdmin;
 
   User(
-      {required this.id,
-      required this.name,
-      required this.surnames,
-      required this.imageProfile,
-      required this.isAdmin
-    });
+      {this.id = '',
+      this.name = '',
+      this.surnames = '',
+      this.imageProfile = '',
+      this.isAdmin = false});
 }

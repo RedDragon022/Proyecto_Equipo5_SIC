@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:teachersguard/config/constants/assets_conts.dart';
 
 class HeaderHome extends StatelessWidget {
   const HeaderHome({super.key, required this.name, required this.imageUrl});
@@ -43,13 +44,18 @@ class _WelcomeText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     final textFont = GoogleFonts.poppins();
+
+    final ImageProvider backgroundImage;
+
+    imageUrl.isEmpty
+        ? backgroundImage = AssetImage(AssetsConsts.defaultAvatar)
+        : backgroundImage = NetworkImage(imageUrl);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        CircleAvatar(radius: avatarRadius, backgroundImage: NetworkImage(imageUrl)),
+        CircleAvatar(radius: avatarRadius, backgroundImage: backgroundImage),
         const SizedBox(width: 10),
         RichText(
           text: TextSpan(

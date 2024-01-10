@@ -46,7 +46,7 @@ class _RegisterView extends StatelessWidget {
                   borderRadius:
                       const BorderRadius.only(topLeft: Radius.circular(100)),
                 ),
-                child: RegisterForm(),
+                child: const RegisterForm(),
               )
             ],
           ),

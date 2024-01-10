@@ -4,10 +4,10 @@ import 'package:teachersguard/presentation/screens/screens.dart';
 import '../../presentation/views/views.dart';
 
 final appRouter = GoRouter(
-  initialLocation: '/login',
+  initialLocation: '/',
   routes: [
     GoRoute(
-      path: '/login',
+      path: '/',
       name: LoginScreen.name,
       builder: (context, state) => const LoginScreen()
     ),
@@ -22,7 +22,7 @@ final appRouter = GoRouter(
       builder: (context, state, child) => HomeScreen(childView: child),
       routes: [
         GoRoute(
-          path: '/',
+          path: '/home',
           builder: (context, state) => const HomeView(),
         ),
         GoRoute(
@@ -33,4 +33,6 @@ final appRouter = GoRouter(
     )
     
   ]
+
+  
 );

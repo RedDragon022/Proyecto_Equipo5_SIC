@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:teachersguard/presentation/providers/providers.dart';
 import 'package:teachersguard/presentation/widgets/widgets.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends ConsumerWidget {
   const HomeView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(userProvider);
     return Column(
       children: [
-        const HeaderHome(
-          name: 'Wongyoung',
-          imageUrl:
-              'https://th.bing.com/th/id/OIP.gGnxYwfTCN_kNeabccBLKwHaJQ?rs=1&pid=ImgDetMain',
+        HeaderHome(
+          name: user.name,
+          imageUrl: user.imageProfile,
         ),
         Flexible(
           child: ListView.separated(

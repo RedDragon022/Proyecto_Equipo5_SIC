@@ -3,17 +3,35 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:teachersguard/presentation/providers/forms/login_form_provider.dart';
+import 'package:teachersguard/presentation/providers/providers.dart';
 
 import '../widgets.dart';
 
 class LoginForm extends ConsumerWidget {
   const LoginForm({super.key});
 
+  void showSnackBar(BuildContext context, String message) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(message)));
+    });
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final textStyle = Theme.of(context).textTheme;
 
     final loginForm = ref.watch(loginFormProvider);
+
+    ref.listen(loginFormProvider, (previous, next) {
+      if (next.errorMessage.isEmpty) return;
+      showSnackBar(context, next.errorMessage);
+    });
+
+    ref.listen(loginFormProvider, (previous, next) {
+      if (next.isAuthenticated) context.go('/home');
+    });
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 50),
@@ -80,10 +98,7 @@ class _CreateAccountRow extends ConsumerWidget {
             )),
         const SizedBox(width: 8),
         CustomTextButton(
-            text: 'Registrarse',
-            onPressed: () => {
-                  context.go('/register')
-                })
+            text: 'Registrarse', onPressed: () => {context.go('/register')})
       ],
     );
   }
