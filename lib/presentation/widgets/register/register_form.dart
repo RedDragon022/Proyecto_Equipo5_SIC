@@ -11,16 +11,32 @@ class RegisterForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final textStyle = Theme.of(context).textTheme;
 
+    final textFont = GoogleFonts.poppins();
+
+    final textTitleStyle = textFont.copyWith(
+      fontSize: textStyle.titleLarge?.fontSize,
+      fontWeight: FontWeight.w600,
+    );
+
+    final textSubtitleStyle = textFont.copyWith(fontSize: textStyle.labelLarge?.fontSize);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 50),
       child: Column(
         children: [
           const SizedBox(height: 50),
-          Text('Registro',
-              style: GoogleFonts.poppins(
-                fontSize: textStyle.titleLarge?.fontSize,
-                fontWeight: FontWeight.w600, // O FontWeight.bold para negrita
-              )),
+          Text('Registro', style: textTitleStyle),
+          const SizedBox(height: 20),
+          CustomAvatarButton(
+            radius: 40,
+            onTap: () => showDialog(
+                context: context,
+                barrierDismissible: true,
+                builder: (context) => CustomAlertDialog(
+                  contentTextStyle: textSubtitleStyle,
+                  titleTextStyle: textTitleStyle,
+                )),
+          ),
           const SizedBox(height: 20),
           const CustomTextField(labelText: 'Correo o num de empleado'),
           const SizedBox(height: 20),
@@ -32,34 +48,32 @@ class RegisterForm extends StatelessWidget {
           const SizedBox(height: 20),
           CustomRectangleButton(text: 'Registrarse', onPressed: () => null),
           const SizedBox(height: 20),
-          _CreateAccountRow(textStyle: textStyle)
+          _CreateAccountRow(textStyle: textSubtitleStyle.copyWith(fontWeight: FontWeight.w400))
         ],
       ),
     );
   }
 }
 
+
+
 class _CreateAccountRow extends StatelessWidget {
   const _CreateAccountRow({
-    required this.textStyle,
+    this.textStyle,
   });
 
-  final TextTheme textStyle;
+  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      
       children: [
         Text('Ya tienes cuenta?',
-            style: GoogleFonts.poppins(
-              fontSize: textStyle.labelLarge?.fontSize,
-              fontWeight:
-                  FontWeight.w400, // O FontWeight.bold para negrita
-            )),
+            style: textStyle),
         const SizedBox(width: 8),
-        CustomTextButton(text: 'Iniciar sesión', onPressed: () => context.go('/login'))
+        CustomTextButton(
+            text: 'Iniciar sesión', onPressed: () => context.go('/'))
       ],
     );
   }

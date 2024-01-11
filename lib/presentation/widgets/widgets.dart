@@ -8,3 +8,5 @@ export 'shared/custom_bottom_navigation_bar.dart';
 export 'home/header_home.dart';
 export 'home/class_box.dart';
 export 'schedule/custom_schedule.dart';
+export 'shared/buttons/custom_avatar_button.dart';
+export 'register/custom_alert_dialog.dart';
