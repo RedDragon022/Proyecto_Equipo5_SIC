@@ -2,14 +2,14 @@ import 'package:flutter/cupertino.dart';
 
 import '../../views.dart';
 
-class UserScheduleView extends StatefulWidget {
-  const UserScheduleView({super.key});
+class UserView extends StatefulWidget {
+  const UserView({super.key});
 
   @override
-  State<UserScheduleView> createState() => _UserScheduleViewState();
+  State<UserView> createState() => _UserScheduleViewState();
 }
 
-class _UserScheduleViewState extends State<UserScheduleView> {
+class _UserScheduleViewState extends State<UserView> {
   
   int? sliding = 0;
 
@@ -30,7 +30,7 @@ class _UserScheduleViewState extends State<UserScheduleView> {
         const SizedBox(height: 20),
         AnimatedSwitcher(
           duration: const Duration(milliseconds: 500),
-          child: sliding == 0 ? ScheduleView() : AttendanceView(),
+          child: sliding == 0 ? ScheduleUserView() : AttendanceUserView(),
         ),
       ],
     );

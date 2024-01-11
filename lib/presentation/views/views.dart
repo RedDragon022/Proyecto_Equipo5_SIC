@@ -1,4 +1,6 @@
 export 'home/home_view.dart';
-export 'schedule/attendance_view.dart';
-export 'schedule/schedule_view.dart';
-export 'schedule/user/user_schedule_view.dart';
+export 'attendance/user/attendance_user_view.dart';
+export 'attendance/user/schedule_user_view.dart';
+export 'attendance/user/user_view.dart';
+export 'attendance/shared/schedule_view.dart';
+export 'attendance/admin/admin_view.dart';

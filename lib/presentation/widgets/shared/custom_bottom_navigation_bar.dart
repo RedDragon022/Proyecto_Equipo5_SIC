@@ -9,7 +9,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
     final String location = GoRouterState.of(context).matchedLocation;
 
     switch (location) {
-      case '/':
+      case '/home':
         return 0;
       case '/schedule':
         return 1;
@@ -25,7 +25,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
   void onItemTapped(BuildContext context, int index) {
     switch (index) {
       case 0:
-        context.go('/');
+        context.go('/home');
         break;
       case 1:
         context.go('/schedule');
