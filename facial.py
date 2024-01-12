@@ -1,4 +1,5 @@
 from tkinter import *
+import requests
 import os
 import cv2
 from matplotlib import pyplot as plt
@@ -12,6 +13,55 @@ Device.pin_factory = MockFactory()
 # Creamos los LEDs simulados
 led_rojo = LED(17)
 led_verde = LED(27)
+
+
+
+
+#------------------------------Clase para enviar datos a la api-------------------------------------------------
+
+
+class TeachersGuardAPI:
+    def __init__(self, base_url):
+        self.base_url = base_url
+
+    def post_request(self, endpoint, data=None, params=None):
+        url = f"{self.base_url}{endpoint}"
+        response = requests.post(url, json=data, params=params)
+        return response
+
+    def get_request(self, endpoint, params=None):
+        url = f"{self.base_url}{endpoint}"
+        response = requests.get(url, params=params)
+        return response
+
+    def registrar_entrada(self, usuario_id):
+        endpoint = "/api/Attendance/register-entry"
+        params = {'userId': usuario_id}  # El userId es un parámetro de consulta según la documentación
+        return self.post_request(endpoint, params=params)
+
+    def registrar_salida(self, usuario_id):
+        endpoint = "/api/Attendance/register-exit"
+        params = {'userId': usuario_id}  # Asumiendo que este también es un parámetro de consulta
+        return self.post_request(endpoint, params=params)
+
+    def obtener_lista_asistencias(self, usuario_id):
+        endpoint = "/api/Attendance/get-list-attendances"
+        params = {'userId': usuario_id}  # Asumiendo que este también es un parámetro de consulta
+        return self.get_request(endpoint, params=params)
+
+    def crear_usuario(self, datos_usuario):
+        endpoint = "/api/User/create"
+        # Aquí no se usan parámetros de consulta, se espera un JSON en el cuerpo de la solicitud
+        return self.post_request(endpoint, data=datos_usuario)
+
+    def obtener_usuario(self, email_o_numero_empleado, password):
+        endpoint = "/api/User/get"
+        params = {'EmailOrEmployeeNumber': email_o_numero_empleado, 'Password': password}
+        return self.get_request(endpoint, params=params)
+
+    
+
+api = TeachersGuardAPI("https://teachersguard.azurewebsites.net")
 
 #--------------------------- Función para registrar el usuario con reconocimiento facial ----------------------
 def registro_facial():
@@ -67,7 +117,8 @@ def login_facial():
     usuario_entrada2.pack()
     Label(pantalla2, text="").pack()
     Button(pantalla2, text="Iniciar Sesión con Foto", width=20, height=1, command=lambda: verificar_rostro(verificacion_usuario.get())).pack()
-
+     
+    
 #-------------------------- Función para verificar el rostro para el inicio de sesión -------------------------
 def verificar_rostro(usuario_login):
     if usuario_login:
@@ -116,6 +167,12 @@ def comparar_rostros(usuario_login):
         led_verde.on()
         led_rojo.off()
         print("Inicio de sesión exitoso. Bienvenido:", usuario_login)
+        # Registro de la entrada sin necesidad de salon o hora, ya que no se usan para este endpoint
+        resultado = api.registrar_entrada(usuario_login)
+        if resultado.status_code == 200:
+            print("Entrada registrada correctamente en la API.")
+        else:
+            print("Error al registrar entrada en la API:", resultado.status_code)
     else:
         led_verde.off()
         led_rojo.on()
@@ -134,7 +191,10 @@ def pantalla_principal():
     Label(text="").pack()
     Button(text="Iniciar Sesión con Foto", height="2", width="30", command=login_facial).pack()
 
+    pantalla.protocol("WM_DELETE_WINDOW", on_closing)  # Vincula la función on_closing al evento de cierre de la ventana
+
     pantalla.mainloop()
+
 
 # Función para cerrar la aplicación
 def on_closing():
