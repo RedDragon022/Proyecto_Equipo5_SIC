@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "488145274548",
+    "project_id": "teachersguard",
+    "storage_bucket": "teachersguard.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:488145274548:android:560d247d8288d0cb0ab9e1",
+        "android_client_info": {
+          "package_name": "com.example.teachersguard"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDy9IO4cF8VcghOe0GaSPNXh7aPjC78Bn0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
