@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:teachersguard/presentation/providers/providers.dart';
 
 import '../../../config/constants/assets_conts.dart';
 
-class CustomAlertDialog extends StatelessWidget {
+class CustomAlertDialog extends ConsumerWidget {
   const CustomAlertDialog(
       {super.key, this.titleTextStyle, this.contentTextStyle});
 
@@ -10,7 +12,7 @@ class CustomAlertDialog extends StatelessWidget {
   final TextStyle? contentTextStyle;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return AlertDialog.adaptive(
       titleTextStyle: titleTextStyle,
       title: const Text('Cargar foto para reconocimiento facial',
@@ -20,11 +22,11 @@ class CustomAlertDialog extends StatelessWidget {
       actions: [
         TextButton.icon(
             label: const Text('Subir foto'),
-            onPressed: () {},
+            onPressed: ref.read(cameraProvider.notifier).selectPhoto,
             icon: const Icon(Icons.upload)),
         TextButton.icon(
             label: const Text('Tomar foto'),
-            onPressed: () {},
+            onPressed: ref.read(cameraProvider.notifier).takePhoto,
             icon: const Icon(Icons.photo_camera))
       ],
     );
@@ -36,17 +38,19 @@ class _ContentInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final deviceHeight = MediaQuery.of(context).size.height;
     return SizedBox(
-      height: 200,
+      height: deviceHeight / 2.5,
       child: Column(
         children: [
           const Text(
-              'La foto tiene que ser de tu rostro y que sea lo mas clara posible, de la siguiente manera.'),
-          const SizedBox(height: 15),
+              'La foto tiene que ser de tu rostro y que sea lo mas clara posible, de la siguiente manera. '
+              "Si subes una foto que no sea como la de la imagen tendrás problemas al registrar asistencia."),
+          const SizedBox(height: 10),
           ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image.asset(AssetsConsts.recognitionImage,
-                  width: 100, height: 100)),
+                  width: 90, height: 90)),
         ],
       ),
     );

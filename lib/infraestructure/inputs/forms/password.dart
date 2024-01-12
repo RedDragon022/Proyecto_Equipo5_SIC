@@ -16,7 +16,7 @@ class Password extends FormzInput<String, PasswordError> {
 
     if (displayError == PasswordError.empty) return 'Falta rellenar el siguiente campo';
     if (displayError == PasswordError.length) {
-      return 'La contraseña debe ser de 6 a 10 caracters';
+      return 'La contraseña debe ser de 6 a 10 caracteres';
     }
 
     return null;
