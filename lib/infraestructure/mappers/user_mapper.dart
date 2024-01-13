@@ -1,4 +1,4 @@
-import 'package:teachersguard/infraestructure/models/response/auth/models.dart';
+import 'package:teachersguard/infraestructure/models/models.dart';
 
 import '../../domain/entities/user.dart';
 

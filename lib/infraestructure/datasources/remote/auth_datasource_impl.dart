@@ -1,20 +1,13 @@
-import 'package:dio/dio.dart';
-
 import 'package:teachersguard/domain/entities/user.dart';
+import 'package:teachersguard/infraestructure/datasources/remote/client/client.dart';
 import 'package:teachersguard/infraestructure/errors/errors.dart';
 import 'package:teachersguard/infraestructure/mappers/mappers.dart';
 
 import '../../../domain/datasources/datasources.dart';
-import '../../models/response/auth/models.dart';
+import '../../models/models.dart';
 
 class AuthDatasourceImpl extends AuthDatasource {
-  final client = Dio(BaseOptions(
-    baseUrl: 'https://teachersguard.azurewebsites.net/api',
-    validateStatus: (status) {
-      return status! <
-          500; // Devuelve true si el código de estado es menor que 500
-    },
-  ));
+ 
 
   @override
   Future<User> login(String emailOrEmployeeNumber, String password) async {
