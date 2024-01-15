@@ -6,7 +6,7 @@ class ScheduleMapper {
           ScheduleObjectResponse response) =>
       Schedule(
           id: response.scheduleId,
-          place: response.placeId,
+          place: Place(id: response.placeId, name: response.placeName),
           begin: response.start,
           end: response.end,
           dayOfWeek: response.dayOfWeek

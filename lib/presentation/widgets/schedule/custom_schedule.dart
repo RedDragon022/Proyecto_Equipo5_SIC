@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CustomSchedule extends StatelessWidget {
-  const CustomSchedule({super.key});
+  const CustomSchedule({super.key, this.onDaySelected});
+
+  final void Function(DateTime, DateTime)? onDaySelected;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +45,7 @@ class CustomSchedule extends StatelessWidget {
       calendarStyle: calendarStyle,
       headerStyle: headerStyle,
       daysOfWeekStyle: daysOfWeekStyle,
+      onDaySelected: onDaySelected,
     );
   }
 }

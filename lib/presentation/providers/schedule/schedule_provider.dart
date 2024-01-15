@@ -15,7 +15,6 @@ class ScheduleNotifier extends StateNotifier<List<Schedule>> {
   ScheduleNotifier(this._scheduleUseCase) : super([]);
 
   Future<void> getScheduleByUserId(String userId) async {
-    print(userId);
     try {
       state = await _scheduleUseCase.getScheduleByUserId(userId);
     } on ScheduleException catch (e) {
