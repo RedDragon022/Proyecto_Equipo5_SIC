@@ -6,6 +6,7 @@ class UserView extends StatefulWidget {
   const UserView({super.key, required this.userId});
 
   final String userId;
+  
 
   @override
   State<UserView> createState() => _UserScheduleViewState();

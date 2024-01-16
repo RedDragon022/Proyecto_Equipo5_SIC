@@ -20,6 +20,7 @@ class ScheduleView extends ConsumerWidget {
 
 
     final user = ref.watch(userProvider);
+    
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),

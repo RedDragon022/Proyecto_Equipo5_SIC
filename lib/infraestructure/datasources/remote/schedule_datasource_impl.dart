@@ -10,7 +10,8 @@ class ScheduleDatasourceImpl extends ScheduleDatasource {
   @override
   Future<List<Schedule>> fetchScheduleByUserId(String userId) async {
     try {
-      final json = await client.get('/Schedule/get-list-schedule',
+      final json = await client.get(
+        '/Schedule/get-list-schedule',
           queryParameters: {'userId': userId});
 
       if (json.statusCode != 200) {

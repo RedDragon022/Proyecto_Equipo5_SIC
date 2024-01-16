@@ -29,9 +29,11 @@ class CustomScheduleList extends StatelessWidget {
 
         return CupertinoListTile(
           padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-          title: Text(DateHelper.convertTo12HourFormat(currentSchedule.begin),
+          title: Text(
+              DateHelper.convertTo12HourFormatBackend(currentSchedule.begin),
               style: titleStyle),
-          subtitle: Text(DateHelper.convertTo12HourFormat(currentSchedule.end),
+          subtitle: Text(
+              DateHelper.convertTo12HourFormatBackend(currentSchedule.end),
               style: subtitleStyle),
           additionalInfo: _ScheduleContainer(
             label: currentSchedule.place.name,
