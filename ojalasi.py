@@ -45,11 +45,6 @@ class TeachersGuardAPI:
 api = TeachersGuardAPI("https://teachersguard.azurewebsites.net")
 
 
-def decodificar_imagen(face_image_base64):
-    image_data = base64.b64decode(face_image_base64)
-    image = Image.open(BytesIO(image_data))
-    image.show()
-
 def leer_rfid_y_comparar_rostro():
     try:
         print("Acerque su tarjeta al lector...")
