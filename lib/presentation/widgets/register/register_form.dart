@@ -3,12 +3,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:teachersguard/presentation/providers/forms/register_form_provider.dart';
-import 'package:teachersguard/presentation/providers/providers.dart';
 
 import '../widgets.dart';
 
 class RegisterForm extends ConsumerWidget {
   const RegisterForm({super.key});
+
+  void showSnackBar(BuildContext context, String message) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(message)));
+    });
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -24,13 +31,20 @@ class RegisterForm extends ConsumerWidget {
     final textSubtitleStyle =
         textFont.copyWith(fontSize: textStyle.labelLarge?.fontSize);
 
-    final imageState = ref.watch(cameraProvider);
-
     final registerForm = ref.watch(registerFormProvider);
 
     final registerNotifier = ref.watch(registerFormProvider.notifier);
 
-    if (imageState != null && context.canPop()) context.pop();
+    if (registerForm.image.value.isNotEmpty && context.canPop()) context.pop();
+
+    ref.listen(registerFormProvider, (previous, next) {
+      if (next.errorMessage.isEmpty) return;
+      showSnackBar(context, next.errorMessage);
+    });
+
+    ref.listen(registerFormProvider, (previous, next) {
+      if (next.isRegistered) context.go('/');
+    });
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 50),
@@ -41,7 +55,7 @@ class RegisterForm extends ConsumerWidget {
           const SizedBox(height: 20),
           CustomAvatarButton(
             radius: 40,
-            image: imageState,
+            image: registerForm.image.value,
             onTap: () => showDialog(
                 context: context,
                 barrierDismissible: true,
@@ -86,22 +100,19 @@ class RegisterForm extends ConsumerWidget {
           const SizedBox(height: 20),
           CustomRectangleButton(
               text: 'Registrarse',
-
               onPressed: () => {
-                
-                if (imageState == null){
-                  showDialog(
-                context: context,
-                barrierDismissible: true,
-                builder: (context) => CustomAlertDialog(
-                      contentTextStyle: textSubtitleStyle,
-                      titleTextStyle: textTitleStyle,
-                    ))
-                },
-                
-                registerNotifier.onFormSubmit()
-            }),
-
+                    if (registerForm.image.value.isEmpty)
+                      {
+                        showDialog(
+                            context: context,
+                            barrierDismissible: true,
+                            builder: (context) => CustomAlertDialog(
+                                  contentTextStyle: textSubtitleStyle,
+                                  titleTextStyle: textTitleStyle,
+                                ))
+                      },
+                    registerNotifier.onFormSubmit()
+                  }),
           const SizedBox(height: 20),
           _CreateAccountRow(
               textStyle:

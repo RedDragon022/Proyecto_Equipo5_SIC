@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:teachersguard/config/constants/assets_conts.dart';
@@ -50,7 +52,7 @@ class _WelcomeText extends StatelessWidget {
 
     imageUrl.isEmpty
         ? backgroundImage = AssetImage(AssetsConsts.defaultAvatar)
-        : backgroundImage = NetworkImage(imageUrl);
+        : backgroundImage = MemoryImage(base64Decode(imageUrl));
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,

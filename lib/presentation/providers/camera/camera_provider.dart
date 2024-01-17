@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../config/dependenciesInjection/container.dart';
 import '../../../useCases/use_cases.dart';
 
-final cameraProvider = StateNotifierProvider.autoDispose<CameraNotifier, String?>((ref) {
+final cameraProvider = StateNotifierProvider<CameraNotifier, String?>((ref) {
   return CameraNotifier(cameraUseCase);
 });
 

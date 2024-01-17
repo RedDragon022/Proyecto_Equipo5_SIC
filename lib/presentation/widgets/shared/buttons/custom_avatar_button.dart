@@ -1,5 +1,4 @@
-import 'dart:io';
-import 'dart:typed_data';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
@@ -14,13 +13,7 @@ class CustomAvatarButton extends StatelessWidget {
 
   ImageProvider<Object> getImageProvider(String? image) {
     if (image != null && image.isNotEmpty) {
-      
-      if (image.startsWith('blob')) {
-        return NetworkImage(image);
-      }
-
-      return FileImage(File(image));
-
+      return MemoryImage(base64Decode(image));
     } else {
       return AssetImage(AssetsConsts.defaultAvatar);
     }

@@ -7,7 +7,6 @@ import '../../../domain/datasources/datasources.dart';
 import '../../models/models.dart';
 
 class AuthDatasourceImpl extends AuthDatasource {
- 
   @override
   Future<User> login(String emailOrEmployeeNumber, String password) async {
     try {
@@ -32,8 +31,24 @@ class AuthDatasourceImpl extends AuthDatasource {
   }
 
   @override
-  Future<String> register(User user) {
-    // TODO: implement register
-    throw UnimplementedError();
+  Future<void> register(User user, String password) async {
+    try {
+      final json = await client.post(
+        '/User/create',
+        data: {
+          "emailOrEmployeeNumber": user.id,
+          "password": password,
+          "faceImage": user.imageProfile,
+          "name": user.name,
+          "surnames": user.surnames
+        }
+      );
+
+      if (json.statusCode != 201) {
+        throw AuthException(json.statusMessage!);
+      }
+    } on AuthException catch (e) {
+      throw AuthException(e.message);
+    }
   }
 }

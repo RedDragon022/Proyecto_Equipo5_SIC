@@ -22,6 +22,8 @@ class _RegisterView extends StatelessWidget {
   Widget build(BuildContext context) {
     final scaffoldBackgroundColor = Theme.of(context).scaffoldBackgroundColor;
     final size = MediaQuery.of(context).size;
+    
+
     return Stack(
       children: [
         Image.asset(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:teachersguard/presentation/providers/providers.dart';
 
 import '../../../config/constants/assets_conts.dart';
@@ -22,11 +23,11 @@ class CustomAlertDialog extends ConsumerWidget {
       actions: [
         TextButton.icon(
             label: const Text('Subir foto'),
-            onPressed: ref.read(cameraProvider.notifier).selectPhoto,
+            onPressed: ref.read(registerFormProvider.notifier).onSelectPhoto,
             icon: const Icon(Icons.upload)),
         TextButton.icon(
             label: const Text('Tomar foto'),
-            onPressed: ref.read(cameraProvider.notifier).takePhoto,
+            onPressed: ref.read(registerFormProvider.notifier).onTakePhoto,
             icon: const Icon(Icons.photo_camera))
       ],
     );

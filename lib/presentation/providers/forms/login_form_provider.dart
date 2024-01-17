@@ -43,12 +43,10 @@ class LoginFormNotifier extends StateNotifier<LoginFormState> {
           state.emailOrEmployeeNumber.value, state.password.value);
 
       state = state.copyWith(isAuthenticated: true);
-
     } on AuthException catch (e) {
-      state = state.copyWith(errorMessage: e.message);
       Future.delayed(const Duration(seconds: 2));
 
-      state = state.copyWith(isPosting: false);
+      state = state.copyWith(isPosting: false, errorMessage: e.message);
     }
   }
 

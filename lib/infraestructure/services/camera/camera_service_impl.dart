@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:teachersguard/infraestructure/services/camera/camera_service.dart';
 
@@ -11,7 +14,11 @@ class CameraServiceImpl extends CameraService {
 
     if (photo == null) return null;
 
-    return photo.path;
+    // Lee la imagen como bytes
+    List<int> imageBytes = await photo.readAsBytes();
+
+    // Convierte los bytes a base64
+    return base64Encode(Uint8List.fromList(imageBytes));
   }
 
   @override
@@ -23,6 +30,10 @@ class CameraServiceImpl extends CameraService {
 
     if (photo == null) return null;
 
-    return photo.path;
+    // Lee la imagen como bytes
+    List<int> imageBytes = await photo.readAsBytes();
+
+    // Convierte los bytes a base64
+    return base64Encode(Uint8List.fromList(imageBytes));
   }
 }
