@@ -7,16 +7,18 @@ import '../../../domain/entities/entities.dart';
 
 final scheduleProvider =
     StateNotifierProvider<ScheduleNotifier, List<Schedule>>((ref) {
-  return ScheduleNotifier(scheduleUseCase);
+  return ScheduleNotifier(scheduleUseCase, authUseCase);
 });
 
 class ScheduleNotifier extends StateNotifier<List<Schedule>> {
+  final AuthUseCase _authUseCase;
   final ScheduleUseCase _scheduleUseCase;
-  ScheduleNotifier(this._scheduleUseCase) : super([]);
+  ScheduleNotifier(this._scheduleUseCase, this._authUseCase) : super([]);
 
-  Future<void> getScheduleByUserId(String userId) async {
+  Future<void> getScheduleByUserId() async {
     try {
-      state = await _scheduleUseCase.getScheduleByUserId(userId);
+      final user = await _authUseCase.getLocalAuth();
+      state = await _scheduleUseCase.getScheduleByUserId(user!.id);
     } on ScheduleException catch (e) {
       print(e.message);
     }

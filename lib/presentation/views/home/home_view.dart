@@ -10,6 +10,7 @@ class HomeView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider);
 
+
     final schedules = ref.watch(scheduleProvider);
     return Column(
       children: [

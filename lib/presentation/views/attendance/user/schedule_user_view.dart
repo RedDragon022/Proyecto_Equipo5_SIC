@@ -9,13 +9,12 @@ import 'package:teachersguard/presentation/providers/providers.dart';
 import '../../../widgets/widgets.dart';
 
 class ScheduleUserView extends ConsumerWidget {
-  const ScheduleUserView({super.key, required this.userId});
+  const ScheduleUserView({super.key});
 
-  final String userId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(scheduleProvider.notifier).getScheduleByUserId(userId);
+    ref.watch(scheduleProvider.notifier).getScheduleByUserId();
 
     final schedules = ref.watch(scheduleProvider);
 

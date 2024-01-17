@@ -28,7 +28,7 @@ class ScheduleView extends ConsumerWidget {
         children: [
           Text((user.isAdmin) ? 'Asistencia':'Agenda', style: titleStyle),
           const SizedBox(height: 20),
-          (user.isAdmin)? AdminView() : UserView(userId: user.id)
+          (user.isAdmin)? const AdminView() : const UserView()
         ],
       ),
     );

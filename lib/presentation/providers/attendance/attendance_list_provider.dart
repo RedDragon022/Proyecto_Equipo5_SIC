@@ -8,19 +8,20 @@ import '../../../useCases/use_cases.dart';
 
 final attendanceListProvider =
     StateNotifierProvider<AttendanceListNotifier, List<Attendance>>((ref) {
-  final userId = ref.watch(userProvider).id;
-  return AttendanceListNotifier(userId, attendanceUseCase);
+  return AttendanceListNotifier(authUseCase, attendanceUseCase);
 });
 
 class AttendanceListNotifier extends StateNotifier<List<Attendance>> {
-  final String userId;
+  final AuthUseCase _authUseCase;
   final AttendanceUseCase _attendanceUseCase;
-  AttendanceListNotifier(this.userId, this._attendanceUseCase) : super([]);
+  AttendanceListNotifier(this._authUseCase, this._attendanceUseCase)
+      : super([]);
 
   Future<void> getAttendancesByUserId() async {
-    print(userId);
+    
     try {
-      state = await _attendanceUseCase.getAttendancesByUserId(userId);
+      final user = await _authUseCase.getLocalAuth();
+      state = await _attendanceUseCase.getAttendancesByUserId(user!.id);
     } on AttendanceException catch (e) {
       print(e.message);
     }
