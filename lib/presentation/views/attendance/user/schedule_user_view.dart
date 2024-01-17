@@ -11,7 +11,6 @@ import '../../../widgets/widgets.dart';
 class ScheduleUserView extends ConsumerWidget {
   const ScheduleUserView({super.key});
 
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(scheduleProvider.notifier).getScheduleByUserId();
@@ -31,11 +30,10 @@ class ScheduleUserView extends ConsumerWidget {
 
     return Column(
       children: [
-        IconButton(
-            onPressed: () {}, icon: const Icon(Icons.calendar_month_sharp)),
+        const Icon(Icons.calendar_month_sharp),
         CustomSchedule(onDaySelected: (selectedDay, focusedDay) {
-
-          final currentDay = DayHelper.convertDartDayToBackendDay(selectedDay.weekday);
+          final currentDay =
+              DayHelper.convertDartDayToBackendDay(selectedDay.weekday);
 
           final currentSchedule = schedules
               .where(

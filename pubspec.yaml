@@ -13,6 +13,8 @@ dependencies:
   firebase_storage: ^11.6.0
   flutter:
     sdk: flutter
+ 
+  flutter_native_splash: ^2.3.9
   flutter_riverpod: ^2.4.9
   formz: ^0.6.1
   go_router: ^12.1.1
@@ -24,8 +26,25 @@ dependencies:
 
 dev_dependencies:
   flutter_lints: ^2.0.0
+  flutter_launcher_icons: ^0.13.1
   flutter_test:
     sdk: flutter
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "lib/assets/icon/icon.jpg"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "lib/assets/icon/icon.jpg"
+
+  
+flutter_native_splash:
+  color: "#ffffff"
+  image: "lib/assets/icon/icon.jpg"
+
+  web: true
 
 flutter:
   uses-material-design: true

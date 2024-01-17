@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:teachersguard/config/helpers/day_helper.dart';
 import 'package:teachersguard/presentation/providers/providers.dart';
 import 'package:teachersguard/presentation/widgets/widgets.dart';
 
@@ -10,8 +11,16 @@ class HomeView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider);
 
-
     final schedules = ref.watch(scheduleProvider);
+
+    final currentDay =
+        DayHelper.convertDartDayToBackendDay(0);
+
+ final currentSchedules = schedules
+    .where((schedule) =>
+        schedule.dayOfWeek.contains(currentDay))
+    .toList();
+
     return Column(
       children: [
         HeaderHome(
@@ -20,15 +29,20 @@ class HomeView extends ConsumerWidget {
         ),
         Flexible(
           child: ListView.separated(
-              itemCount: 2,
+              itemCount: currentSchedules.length,
               physics: const BouncingScrollPhysics(),
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
               separatorBuilder: (context, index) => const SizedBox(height: 30),
-              itemBuilder: (context, index) => const ClassBox(
+              itemBuilder: (context, index) {
+                final currentSchedule = currentSchedules[index];
+                
+                return ClassBox(
                     classLabel: 'Clase Actual',
-                    classRoomLabel: 'Salon 303',
-                    hourLabel: '10:00-11:00',
-                  )),
+                    classRoomLabel: currentSchedule.place.name,
+                    hourLabel: '${currentSchedule.begin}-${currentSchedule.end}',
+                  );
+                
+              }),
         )
       ],
     );
