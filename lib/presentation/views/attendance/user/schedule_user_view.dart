@@ -13,7 +13,7 @@ class ScheduleUserView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(scheduleProvider.notifier).getScheduleByUserId();
+    
 
     final schedules = ref.watch(scheduleProvider);
 

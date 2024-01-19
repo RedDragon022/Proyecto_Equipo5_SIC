@@ -16,11 +16,12 @@ class ScheduleNotifier extends StateNotifier<List<Schedule>> {
   ScheduleNotifier(this._scheduleUseCase, this._authUseCase) : super([]);
 
   Future<void> getScheduleByUserId() async {
+    if (state.isNotEmpty) return;
     try {
       final user = await _authUseCase.getLocalAuth();
       state = await _scheduleUseCase.getScheduleByUserId(user!.id);
     } on ScheduleException catch (e) {
-      print(e.message);
+      throw ScheduleException(e.message);
     }
   }
 }

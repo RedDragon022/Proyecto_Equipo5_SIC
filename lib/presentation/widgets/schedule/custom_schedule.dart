@@ -26,17 +26,16 @@ class CustomSchedule extends StatelessWidget {
 
     final headerStyle = HeaderStyle(
         titleCentered: true,
-        formatButtonVisible: false, // Oculta el botón de cambio de formato predeterminado
+        formatButtonVisible:
+            false, // Oculta el botón de cambio de formato predeterminado
         titleTextStyle: textStyleContext.titleLarge!.copyWith(
             color: const Color(0xFF7B7B7B), fontWeight: FontWeight.w600));
 
-    final weekStyle = textStyleContext.labelLarge!.copyWith(
-            color: const Color(0xFF7B7B7B), fontWeight: FontWeight.w600);
+    final weekStyle = textStyleContext.labelLarge!
+        .copyWith(color: const Color(0xFF7B7B7B), fontWeight: FontWeight.w600);
 
-    final daysOfWeekStyle = DaysOfWeekStyle(
-      weekdayStyle: weekStyle,
-      weekendStyle: weekStyle
-    );
+    final daysOfWeekStyle =
+        DaysOfWeekStyle(weekdayStyle: weekStyle, weekendStyle: weekStyle);
 
     return TableCalendar(
       firstDay: currentTime,
@@ -46,6 +45,8 @@ class CustomSchedule extends StatelessWidget {
       headerStyle: headerStyle,
       daysOfWeekStyle: daysOfWeekStyle,
       onDaySelected: onDaySelected,
+      locale: 'es_ES',
+      startingDayOfWeek: StartingDayOfWeek.monday,
     );
   }
 }

@@ -33,23 +33,23 @@ class _LoginView extends StatelessWidget {
               .withOpacity(0.2), // Color y opacidad para agregar sombra
           colorBlendMode: BlendMode.multiply,
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: size.height / 3),
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: scaffoldBackgroundColor,
-                borderRadius:
-                    const BorderRadius.only(topLeft: Radius.circular(100)),
-              ),
-              child: const SingleChildScrollView(
-                  physics: BouncingScrollPhysics(), 
-                  child: LoginForm()
+        SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: size.height / 3),
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: scaffoldBackgroundColor,
+                  borderRadius:
+                      const BorderRadius.only(topLeft: Radius.circular(100)),
                 ),
-            )
-          ],
+                child: const LoginForm(),
+              )
+            ],
+          ),
         )
       ],
     );

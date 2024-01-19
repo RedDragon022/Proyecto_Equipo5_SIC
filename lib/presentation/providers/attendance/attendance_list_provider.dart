@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:teachersguard/config/dependenciesInjection/container.dart';
 import 'package:teachersguard/domain/entities/entities.dart';
-import 'package:teachersguard/presentation/providers/providers.dart';
 
 import '../../../infraestructure/errors/errors.dart';
 import '../../../useCases/use_cases.dart';
