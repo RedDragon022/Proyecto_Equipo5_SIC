@@ -12,6 +12,7 @@ class CustomRectangleButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textStyle = Theme.of(context).textTheme;
+    final primaryColor = Theme.of(context).primaryColor;
     return SizedBox(
       width: double.infinity,
       height: 50,
@@ -20,7 +21,7 @@ class CustomRectangleButton extends StatelessWidget {
         style: TextButton.styleFrom(
             elevation: 0,
             alignment: Alignment.center,
-            backgroundColor: backgroundColor ?? const Color(0xFFB356FF),
+            backgroundColor: backgroundColor ?? primaryColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
@@ -28,10 +29,7 @@ class CustomRectangleButton extends StatelessWidget {
             textStyle:
                 const TextStyle(fontSize: 15, fontWeight: FontWeight.w500)),
         child: Text(text,
-            style: GoogleFonts.poppins(
-              fontSize: textStyle.labelLarge?.fontSize,
-              fontWeight: FontWeight.w500, // O FontWeight.bold para negrita
-            )),
+            style: textStyle.labelLarge?.copyWith( fontWeight: FontWeight.w500 )),
       ),
     );
   }

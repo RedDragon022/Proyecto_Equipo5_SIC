@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:teachersguard/presentation/providers/forms/register_form_provider.dart';
 
 import '../widgets.dart';
@@ -21,15 +20,12 @@ class RegisterForm extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final textStyle = Theme.of(context).textTheme;
 
-    final textFont = GoogleFonts.poppins();
-
-    final textTitleStyle = textFont.copyWith(
-      fontSize: textStyle.titleLarge?.fontSize,
+    final textTitleStyle = textStyle.titleLarge?.copyWith(
       fontWeight: FontWeight.w600,
     );
 
     final textSubtitleStyle =
-        textFont.copyWith(fontSize: textStyle.labelLarge?.fontSize);
+        textTitleStyle?.copyWith(fontSize: textStyle.labelLarge?.fontSize);
 
     final registerForm = ref.watch(registerFormProvider);
 
@@ -116,7 +112,7 @@ class RegisterForm extends ConsumerWidget {
           const SizedBox(height: 20),
           _CreateAccountRow(
               textStyle:
-                  textSubtitleStyle.copyWith(fontWeight: FontWeight.w400))
+                  textSubtitleStyle?.copyWith(fontWeight: FontWeight.w400))
         ],
       ),
     );

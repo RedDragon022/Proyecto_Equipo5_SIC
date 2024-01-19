@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:teachersguard/config/helpers/date_helper.dart';
 import 'package:teachersguard/presentation/providers/providers.dart';
 
@@ -11,14 +10,11 @@ class AttendanceUserView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final textStyleContext = Theme.of(context).textTheme;
 
-    final textFont = GoogleFonts.poppins();
 
-    final titleStyle = textFont.copyWith(
-        fontSize: textStyleContext.labelLarge?.fontSize,
+    final titleStyle = textStyleContext.labelLarge?.copyWith(
         fontWeight: FontWeight.w600);
 
-    final textStyle = textFont.copyWith(
-        fontSize: textStyleContext.labelLarge?.fontSize,
+    final textStyle = textStyleContext.labelLarge?.copyWith(
         fontStyle: FontStyle.italic);
 
     ref.watch(attendanceListProvider.notifier).getAttendancesByUserId();

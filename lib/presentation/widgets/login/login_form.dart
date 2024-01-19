@@ -92,8 +92,8 @@ class _CreateAccountRow extends ConsumerWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text('No tienes cuenta?',
-            style: GoogleFonts.poppins(
-              fontSize: textStyle.labelLarge?.fontSize,
+            style: 
+               textStyle.labelLarge?.copyWith(
               fontWeight: FontWeight.w400, // O FontWeight.bold para negrita
             )),
         const SizedBox(width: 8),

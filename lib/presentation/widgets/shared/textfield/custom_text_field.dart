@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField(
@@ -30,8 +29,7 @@ class CustomTextField extends StatelessWidget {
         border.copyWith(
           borderSide: const BorderSide(color: Colors.red, width: 1.5));
 
-    final textFont = GoogleFonts.poppins(
-            fontSize: textStyle.labelLarge?.fontSize,
+    final labelStyle = textStyle.labelLarge?.copyWith(
             color: Colors.grey.shade100);
 
     final decoration = InputDecoration(
@@ -39,10 +37,10 @@ class CustomTextField extends StatelessWidget {
         fillColor: const Color(0xFFD9D9D9),
         border: border,
         errorBorder: errorBorder,
-        labelStyle: textFont.copyWith(fontWeight: FontWeight.w600),
+        labelStyle: labelStyle?.copyWith(fontWeight: FontWeight.w600),
         labelText: labelText,
         errorText: errorText,
-        errorStyle: textFont.copyWith(color: Colors.red, fontWeight: FontWeight.w600)
+        errorStyle: labelStyle?.copyWith(color: Colors.red, fontWeight: FontWeight.w600)
     );
 
     return TextFormField(
@@ -50,7 +48,7 @@ class CustomTextField extends StatelessWidget {
       decoration: decoration,
       onChanged: onChanged,
       validator: validator,      
-      style: textFont.copyWith(fontWeight: FontWeight.w300),
+      style: labelStyle?.copyWith(fontWeight: FontWeight.w300),
     );
   }
 }

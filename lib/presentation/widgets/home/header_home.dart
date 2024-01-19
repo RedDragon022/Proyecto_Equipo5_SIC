@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:teachersguard/config/constants/assets_conts.dart';
 
 class HeaderHome extends StatelessWidget {
@@ -46,8 +46,6 @@ class _WelcomeText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textFont = GoogleFonts.poppins();
-
     final ImageProvider backgroundImage;
 
     imageUrl.isEmpty
@@ -65,10 +63,10 @@ class _WelcomeText extends StatelessWidget {
             children: [
               TextSpan(
                   text: 'Hola, ',
-                  style: textFont.copyWith(fontSize: textStyle?.fontSize)),
+                  style: textStyle?.copyWith(fontSize: textStyle?.fontSize)),
               TextSpan(
                   text: "$name!",
-                  style: textFont.copyWith(
+                  style: textStyle?.copyWith(
                       fontSize: textStyle?.fontSize,
                       fontWeight: FontWeight.w600)),
             ],
