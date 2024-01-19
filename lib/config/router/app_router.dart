@@ -3,22 +3,17 @@ import 'package:teachersguard/presentation/screens/screens.dart';
 
 import '../../presentation/views/views.dart';
 
-final appRouter = GoRouter(
-  initialLocation: '/',
-  routes: [
-    GoRoute(
+final appRouter = GoRouter(initialLocation: '/', routes: [
+  GoRoute(
       path: '/',
       name: LoginScreen.name,
-      builder: (context, state) => const LoginScreen()
-    ),
-
-    GoRoute(
-      path: '/register',
-      name: RegisterScreen.name,
-      builder: (context, state) => const RegisterScreen(),
-    ),
-
-    ShellRoute(
+      builder: (context, state) => const LoginScreen()),
+  GoRoute(
+    path: '/register',
+    name: RegisterScreen.name,
+    builder: (context, state) => const RegisterScreen(),
+  ),
+  ShellRoute(
       builder: (context, state, child) => HomeScreen(childView: child),
       routes: [
         GoRoute(
@@ -28,11 +23,12 @@ final appRouter = GoRouter(
         GoRoute(
           path: '/schedule',
           builder: (context, state) => const ScheduleScreen(),
-        )
-      ]
-    )
-    
-  ]
-
-  
-);
+        ),
+        GoRoute(
+            path: '/stadistics',
+            builder: (context, state) => const StadisticsScreen()),
+        GoRoute(
+            path: '/settings',
+            builder: (context, state) => const SettingsScreen()),
+      ])
+]);

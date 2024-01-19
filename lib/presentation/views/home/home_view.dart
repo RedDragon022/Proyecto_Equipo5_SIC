@@ -21,54 +21,13 @@ class HomeView extends ConsumerWidget {
 
     final currentDay =
         DayHelper.convertDartDayToBackendDay(currentTime.weekday);
+  final currentShedules = schedules
+    .takeWhile((schedule) =>
+        schedule.dayOfWeek.contains(currentDay) || schedule.dayOfWeek.contains(currentDay + 1))
+    .toList();
 
-    final currentShedules = schedules
-        .where(
-          (schedule) => schedule.dayOfWeek.contains(currentDay) || schedule.dayOfWeek.contains(currentDay + 1),
-        )
-        .toList();
 
-    currentShedules.sort((a, b) {
-      DateTime beginTimeA = DateTime(
-        currentTime.year,
-        currentTime.month,
-        currentTime.day,
-        int.parse(a.begin.split(':')[0]),
-        int.parse(a.begin.split(':')[1]),
-      );
 
-      DateTime beginTimeB = DateTime(
-        currentTime.year,
-        currentTime.month,
-        currentTime.day,
-        int.parse(a.end.split(':')[0]),
-        int.parse(a.end.split(':')[1]),
-      );
-
-      DateTime endTimeA = DateTime(
-        currentTime.year,
-        currentTime.month,
-        currentTime.day,
-        int.parse(b.begin.split(':')[0]),
-        int.parse(b.begin.split(':')[1]),
-      );
-
-      DateTime endTimeB = DateTime(
-        currentTime.year,
-        currentTime.month,
-        currentTime.day,
-        int.parse(b.end.split(':')[0]),
-        int.parse(b.end.split(':')[1]),
-      );
-
-      print(beginTimeA);
-      print(beginTimeB);
-      print(endTimeA);
-      print(endTimeB);
-
-      // Ordenar de la próxima a la más lejana
-      return beginTimeA.compareTo(endTimeA);
-    });
 
     // Obtener los primeros dos elementos de la lista ordenada
     currentShedules.take(2).toList();
