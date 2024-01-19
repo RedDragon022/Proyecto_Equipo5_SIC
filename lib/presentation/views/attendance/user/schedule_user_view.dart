@@ -12,18 +12,16 @@ class ScheduleUserView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    
-
     final schedules = ref.watch(scheduleProvider);
+
+    ref.watch(scheduleProvider.notifier).getScheduleByUserId();
 
     final deviceHeight = MediaQuery.of(context).size.height;
 
     final textStyle = Theme.of(context).textTheme;
 
-
-    final style = textStyle.titleMedium?.copyWith(
-        fontWeight: FontWeight.w700,
-        letterSpacing: 1.5);
+    final style = textStyle.titleMedium
+        ?.copyWith(fontWeight: FontWeight.w700, letterSpacing: 1.5);
 
     return Column(
       children: [

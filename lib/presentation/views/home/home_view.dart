@@ -13,7 +13,7 @@ class HomeView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider);
 
-    ref.watch(scheduleProvider.notifier).getScheduleByUserId();
+
 
     final schedules = ref.watch(scheduleProvider);
 
@@ -25,9 +25,6 @@ class HomeView extends ConsumerWidget {
     .takeWhile((schedule) =>
         schedule.dayOfWeek.contains(currentDay) || schedule.dayOfWeek.contains(currentDay + 1))
     .toList();
-
-
-
 
     // Obtener los primeros dos elementos de la lista ordenada
     currentShedules.take(2).toList();

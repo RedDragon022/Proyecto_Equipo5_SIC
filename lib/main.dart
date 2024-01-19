@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
-import 'package:teachersguard/config/theme/app_theme.dart';
+import 'package:teachersguard/config/theme/app_theme_provider.dart';
 import 'package:teachersguard/firebase_options.dart';
 
 import 'config/router/app_router.dart';
@@ -16,14 +16,17 @@ void main() async {
   runApp(const ProviderScope(child: MainApp()));
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends ConsumerWidget {
   const MainApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(themeProvider);
+
+    
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      theme: AppTheme().getTheme(),
+      theme: theme.getTheme(),
       routerConfig: appRouter,
     );
   }
