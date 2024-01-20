@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../config/helpers/division_helper.dart';
 
 class CenterCircularProgressIndicator extends StatelessWidget {
-  const CenterCircularProgressIndicator({super.key, 
+  const CenterCircularProgressIndicator({
+    super.key,
     required this.attendances,
     required this.totalAttendances,
     required this.textStyle,
@@ -26,13 +26,16 @@ class CenterCircularProgressIndicator extends StatelessWidget {
               height: 150.0,
               child: CircularProgressIndicator.adaptive(
                 strokeWidth: 8,
-                value: DivisionHelper.division(
-                    attendances.toDouble(), totalAttendances.toDouble()),
+                value: totalAttendances == 0
+                    ? 0
+                    : attendances.toDouble() / totalAttendances.toDouble(),
                 backgroundColor: Colors.grey,
               ),
             ),
             Text(
-              '${DivisionHelper.division(attendances.toDouble(), totalAttendances.toDouble()) * 100}%',
+              totalAttendances == 0
+                  ? '0%'
+                  : '${(attendances.toDouble() / totalAttendances.toDouble() * 100).toStringAsFixed(2)}%',
               style: textStyle,
             ),
           ],

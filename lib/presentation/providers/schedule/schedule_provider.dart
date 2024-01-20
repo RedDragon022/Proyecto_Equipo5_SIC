@@ -20,8 +20,8 @@ class ScheduleNotifier extends StateNotifier<List<Schedule>> {
     try {
       final user = await _authUseCase.getLocalAuth();
       state = await _scheduleUseCase.getScheduleByUserId(user!.id);
-    } on ScheduleException catch (e) {
-      throw ScheduleException(e.message);
+    } on ScheduleException catch (_) {
+      state = [];
     }
   }
 }

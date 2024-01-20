@@ -19,16 +19,13 @@ class WeekAttendanceNotifier extends StateNotifier<WeekAttendance> {
   bool isLoading = true;
 
   Future<void> getWeekAttendanceByUserId() async {
-  
     try {
       final user = await _authUseCase.getLocalAuth();
       state = await _attendanceUseCase.getWeekAttendanceByUserId(user!.id);
       isLoading = false;
-    } on AttendanceException catch (e) {
+    } catch (_) {
       isLoading = false;
-      throw AttendanceException(e.message);
+      state = WeekAttendance();
     }
-
-    
   }
 }

@@ -17,12 +17,11 @@ class AttendanceListNotifier extends StateNotifier<List<Attendance>> {
       : super([]);
 
   Future<void> getAttendancesByUserId() async {
-    
     try {
       final user = await _authUseCase.getLocalAuth();
       state = await _attendanceUseCase.getAttendancesByUserId(user!.id);
-    } on AttendanceException catch (e) {
-      throw AttendanceException(e.message);
+    } on AttendanceException catch (_) {
+      state = [];
     }
   }
 }
