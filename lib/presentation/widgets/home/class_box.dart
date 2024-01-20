@@ -58,7 +58,7 @@ class ClassBox extends StatelessWidget {
                     iconColor: Colors.green.shade400,
                     textStyle: subtitleStyle),
                 const SizedBox(width: 10),
-                Flexible(child: _AnimatedProgressIndicator(isCompleted: false)),
+                const Flexible(child: _AnimatedProgressIndicator(isCompleted: false)),
                 const SizedBox(width: 10),
                 _TextProgressIndicator(
                     label: 'Salida',

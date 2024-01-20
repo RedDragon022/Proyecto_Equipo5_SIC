@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:teachersguard/config/helpers/date_helper.dart';
-import 'package:teachersguard/presentation/providers/providers.dart';
-import 'package:teachersguard/presentation/widgets/widgets.dart';
 
-import '../../../config/helpers/day_helper.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+
+import '../../providers/providers.dart';
+import '../../widgets/widgets.dart';
 
 class HomeView extends ConsumerWidget {
   const HomeView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final textStyle = Theme.of(context).textTheme.titleLarge;
+    final primaryColor = Theme.of(context).primaryColor;
+
     final user = ref.watch(userProvider);
 
+    if (user.name.isEmpty) ref.read(userProvider.notifier).getLocalUserAuth();
 
+    ref.watch(weekAttendanceProvider.notifier).getWeekAttendanceByUserId();
 
-    final schedules = ref.watch(scheduleProvider);
+    final isLoading = ref.watch(weekAttendanceProvider.notifier).isLoading;
 
-    final currentTime = DateTime.now();
+    final weekAttendances = ref.watch(weekAttendanceProvider);
 
-    final currentDay =
-        DayHelper.convertDartDayToBackendDay(currentTime.weekday);
-  final currentShedules = schedules
-    .takeWhile((schedule) =>
-        schedule.dayOfWeek.contains(currentDay) || schedule.dayOfWeek.contains(currentDay + 1))
-    .toList();
+    final attendances = weekAttendances.attendances;
+    final totalAttendances = weekAttendances.totalAttendances;
 
-    // Obtener los primeros dos elementos de la lista ordenada
-    currentShedules.take(2).toList();
+    final deviceHeight = MediaQuery.of(context).size.height;
 
     return Column(
       children: [
@@ -35,28 +35,16 @@ class HomeView extends ConsumerWidget {
           name: user.name,
           imageUrl: user.imageProfile,
         ),
-        Flexible(
-          child: ListView.separated(
-              itemCount: currentShedules.length,
-              physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-              separatorBuilder: (context, index) => const SizedBox(height: 30),
-              itemBuilder: (context, index) {
-                final currentSchedule = currentShedules[index];
-
-                final entryHour = DateHelper.convertTo12HourFormatBackend(
-                    currentSchedule.begin);
-
-                final exitHour = DateHelper.convertTo12HourFormatBackend(
-                    currentSchedule.end);
-
-                return ClassBox(
-                  classLabel: (index == 0) ? 'Clase Actual' : 'Siguiente clase',
-                  classRoomLabel: currentSchedule.place.name,
-                  hourLabel: '$entryHour-$exitHour',
-                );
-              }),
-        )
+        SizedBox(height: deviceHeight / 4),
+        (isLoading)
+            ? LoadingAnimationWidget.fourRotatingDots(
+                color: primaryColor,
+                size: 100,
+              )
+            : CenterCircularProgressIndicator(
+                attendances: attendances,
+                totalAttendances: totalAttendances,
+                textStyle: textStyle),
       ],
     );
   }

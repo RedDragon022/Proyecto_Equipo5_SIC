@@ -29,4 +29,13 @@ class UserNotifier extends StateNotifier<User> {
       throw AuthException(e.message);
     }
   }
+
+  Future<void> getLocalUserAuth() async {
+    try {
+      final user = await _authUseCase.getLocalAuth();
+      state = user!;
+    } catch (e) {
+      print(e);
+    }
+  }
 }

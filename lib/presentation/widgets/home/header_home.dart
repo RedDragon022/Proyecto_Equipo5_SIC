@@ -18,7 +18,7 @@ class HeaderHome extends StatelessWidget {
 
     return Container(
       height: deviceHeight / 8,
-      color: const Color.fromARGB(255, 218, 218, 218),
+      color: Colors.grey.shade500,
       padding: const EdgeInsets.only(bottom: 10, left: 20, right: 20),
       alignment: Alignment.bottomCenter,
       child: _WelcomeText(
@@ -63,7 +63,9 @@ class _WelcomeText extends StatelessWidget {
             children: [
               TextSpan(
                   text: 'Hola, ',
-                  style: textStyle?.copyWith(fontSize: textStyle?.fontSize)),
+                  style: textStyle?.copyWith(
+                      fontSize: textStyle?.fontSize,
+                      fontStyle: textStyle?.fontStyle)),
               TextSpan(
                   text: "$name!",
                   style: textStyle?.copyWith(

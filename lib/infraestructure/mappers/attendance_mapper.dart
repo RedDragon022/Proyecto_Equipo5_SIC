@@ -11,4 +11,10 @@ class AttendanceMapper {
           userId: response.userId,
           isAttendanceCompleted: response.fullAttendance,
           place: Place(id: response.placeId, name: response.placeName));
+
+  static WeekAttendance mapWeekAttendanceResponseToWeekAttendanceEntity(
+          WeekAttendances response) =>
+      WeekAttendance(
+          totalAttendances: response.totalAttendances,
+          attendances: response.attendances);
 }

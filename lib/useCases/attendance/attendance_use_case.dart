@@ -9,4 +9,8 @@ class AttendanceUseCase {
   Future<List<Attendance>> getAttendancesByUserId(String userId) {
     return _attendanceRepository.fetchAttendancesByUserId(userId);
   }
+
+  Future<WeekAttendance> getWeekAttendanceByUserId(String userId) {
+    return _attendanceRepository.fetchWeekAttendanceByUserId(userId);
+  }
 }
