@@ -25,8 +25,8 @@ class WeekAttendanceNotifier extends StateNotifier<WeekAttendance> {
       state = await _attendanceUseCase.getWeekAttendanceByUserId(user!.id);
       isLoading = false;
     } on AttendanceException catch (e) {
-      print(e.message);
       isLoading = false;
+      throw AttendanceException(e.message);
     }
 
     

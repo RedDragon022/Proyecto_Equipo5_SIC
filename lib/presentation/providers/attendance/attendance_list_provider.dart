@@ -22,7 +22,7 @@ class AttendanceListNotifier extends StateNotifier<List<Attendance>> {
       final user = await _authUseCase.getLocalAuth();
       state = await _attendanceUseCase.getAttendancesByUserId(user!.id);
     } on AttendanceException catch (e) {
-      print(e.message);
+      throw AttendanceException(e.message);
     }
   }
 }

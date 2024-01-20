@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:teachersguard/config/theme/app_theme_provider.dart';
+import 'package:teachersguard/presentation/providers/providers.dart';
 
 import '../../widgets/widgets.dart';
 
@@ -17,11 +18,11 @@ class SettingsScreen extends StatelessWidget {
   }
 }
 
-class _SettingsView extends StatelessWidget {
+class _SettingsView extends ConsumerWidget {
   const _SettingsView();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final textStyle = Theme.of(context).textTheme;
 
     final titleStyle =
@@ -50,7 +51,9 @@ class _SettingsView extends StatelessWidget {
             text: 'Cerrar sesión',
             backgroundColor: const Color(0xFFF2F1F1),
             textColor: Colors.red,
-            onPressed: () => context.go('/'),
+            onPressed: () => {
+              ref.read(userProvider.notifier).removeLocalUserAuth(),
+              context.go('/')},
           ),
         ],
       ),
