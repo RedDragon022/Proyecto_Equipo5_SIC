@@ -6,10 +6,12 @@ class CustomCircularProgressIndicator extends StatelessWidget {
     required this.counter,
     required this.total,
     this.textStyle,
+    required this.label,
   });
 
   final int counter;
   final int total;
+  final String label;
   final TextStyle? textStyle;
 
   @override
@@ -25,9 +27,7 @@ class CustomCircularProgressIndicator extends StatelessWidget {
               height: 150.0,
               child: CircularProgressIndicator.adaptive(
                 strokeWidth: 8,
-                value: total == 0
-                    ? 0
-                    : counter.toDouble() / total.toDouble(),
+                value: total == 0 ? 0 : counter.toDouble() / total.toDouble(),
                 backgroundColor: Colors.grey,
               ),
             ),
@@ -41,7 +41,7 @@ class CustomCircularProgressIndicator extends StatelessWidget {
         ),
         const SizedBox(height: 15),
         Text(
-          '$counter/$total Asistencias semanales',
+          label,
           style: textStyle?.copyWith(fontWeight: FontWeight.w600),
         )
       ],

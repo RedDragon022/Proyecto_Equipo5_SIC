@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import 'package:teachersguard/presentation/providers/place/place_list_provider.dart';
+import 'package:teachersguard/presentation/providers/place/week_use_place_provider.dart';
 import 'package:teachersguard/presentation/widgets/widgets.dart';
 
 import '../../../domain/entities/entities.dart';
@@ -19,7 +20,6 @@ class StadisticsView extends ConsumerWidget {
         textStyle.displaySmall?.copyWith(fontWeight: FontWeight.w600);
 
     ref.watch(placeListProvider.notifier).getAllPlaces();
-
 
     final isLoading = ref.watch(placeListProvider.notifier).isLoading;
 
@@ -48,22 +48,33 @@ class StadisticsView extends ConsumerWidget {
   }
 }
 
-class _WidgetsLoaded extends StatelessWidget {
+class _WidgetsLoaded extends ConsumerWidget {
   const _WidgetsLoaded({required this.places, required this.sizeBoxHeight});
 
   final List<Place> places;
   final double sizeBoxHeight;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
+     final place = ref.watch(weekUsePlaceProvider);
     return Column(
       children: [
         CustomDropdownButton(
-          items: places.map((place) => place.name).toList(),
-          //onChanged: (value) => ,
-        ),
+            items: places.map((place) => place.name).toList(),
+            onChanged: (value) {
+              final place =
+                  places.firstWhere((place) => place.name.contains(value));
+              ref
+                  .read(weekUsePlaceProvider.notifier)
+                  .getWeekUsePlaceByPlaceId(place.id);
+            }),
         SizedBox(height: sizeBoxHeight),
-        CustomCircularProgressIndicator(counter: 0, total: 0)
+        CustomCircularProgressIndicator(
+          counter: place.counter,
+          total:  place.total,
+          label: 'Porcentaje de uso semanal',
+        )
       ],
     );
   }

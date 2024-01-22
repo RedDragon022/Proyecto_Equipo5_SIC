@@ -16,9 +16,9 @@ class HomeView extends ConsumerWidget {
 
     final user = ref.watch(userProvider);
 
-    if (user.name.isEmpty) ref.read(userProvider.notifier).getLocalUserAuth();
+    if (user.name.isEmpty) ref.watch(userProvider.notifier).getLocalUserAuth();
 
-    ref.read(weekAttendanceProvider.notifier).getWeekAttendanceByUserId();
+    ref.watch(weekAttendanceProvider.notifier).getWeekAttendanceByUserId();
 
     final weekAttendances = ref.watch(weekAttendanceProvider);
 
@@ -41,7 +41,9 @@ class HomeView extends ConsumerWidget {
             : CustomCircularProgressIndicator(
                 counter: weekAttendances.attendances,
                 total: weekAttendances.totalAttendances,
-                textStyle: textStyle),
+                label: '${weekAttendances.attendances}/${weekAttendances.totalAttendances} Asistencias semanales',
+                textStyle: textStyle
+              ),
       ],
     );
   }

@@ -10,4 +10,8 @@ class PlaceUseCase {
   Future<List<Place>> getAllPlaces() {
     return _placeRepository.fetchPlaces();
   }
+
+  Future<WeekUsePlace> getUsePlaceByPlaceId(String placeId) {
+    return _placeRepository.fetchUsePlace(placeId);
+  }
 }
