@@ -16,7 +16,6 @@ class WeekUsePlaceNotifier extends StateNotifier<WeekUsePlace> {
   Future<void> getWeekUsePlaceByPlaceId(String placeId) async {
     try {
       state = await _placeUseCase.getUsePlaceByPlaceId(placeId);
-      print(state.total);
     } catch (_) {
       state = WeekUsePlace();
     }

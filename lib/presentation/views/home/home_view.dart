@@ -16,15 +16,16 @@ class HomeView extends ConsumerWidget {
 
     final user = ref.watch(userProvider);
 
-    if (user.name.isEmpty) ref.watch(userProvider.notifier).getLocalUserAuth();
+    if (user.name.isEmpty) ref.read(userProvider.notifier).getLocalUserAuth();
 
-    ref.watch(weekAttendanceProvider.notifier).getWeekAttendanceByUserId();
+    ref.read(weekAttendanceProvider.notifier).getWeekAttendanceByUserId();
 
     final weekAttendances = ref.watch(weekAttendanceProvider);
 
-    final isLoading = ref.read(weekAttendanceProvider.notifier).isLoading;
+    final isLoading = ref.watch(weekAttendanceProvider.notifier).isLoading;
 
     final deviceHeight = MediaQuery.of(context).size.height;
+
 
     return Column(
       children: [
@@ -41,9 +42,9 @@ class HomeView extends ConsumerWidget {
             : CustomCircularProgressIndicator(
                 counter: weekAttendances.attendances,
                 total: weekAttendances.totalAttendances,
-                label: '${weekAttendances.attendances}/${weekAttendances.totalAttendances} Asistencias semanales',
-                textStyle: textStyle
-              ),
+                label:
+                    '${weekAttendances.attendances}/${weekAttendances.totalAttendances} Asistencias semanales',
+                textStyle: textStyle),
       ],
     );
   }

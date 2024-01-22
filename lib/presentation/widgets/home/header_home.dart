@@ -44,18 +44,23 @@ class _WelcomeText extends StatelessWidget {
   final String imageUrl;
   final double avatarRadius;
 
-  @override
-  Widget build(BuildContext context) {
+  ImageProvider<Object> _getBackgroundImage(String imageUrl) {
     final ImageProvider backgroundImage;
 
     imageUrl.isEmpty
         ? backgroundImage = AssetImage(AssetsConsts.defaultAvatar)
         : backgroundImage = MemoryImage(base64Decode(imageUrl));
 
+    return backgroundImage;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        CircleAvatar(radius: avatarRadius, backgroundImage: backgroundImage),
+        CircleAvatar(radius: avatarRadius, backgroundImage: _getBackgroundImage(imageUrl)),
         const SizedBox(width: 10),
         RichText(
           text: TextSpan(

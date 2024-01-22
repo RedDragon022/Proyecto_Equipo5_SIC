@@ -25,6 +25,7 @@ class UserNotifier extends StateNotifier<User> {
       } else {
         state = auth;
       }
+    
     } on AuthException catch (e) {
       throw AuthException(e.message);
     }
