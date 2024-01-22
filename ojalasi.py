@@ -37,7 +37,7 @@ class TeachersGuardAPI:
         return self.post_request(endpoint, params=params)
 
     def obtener_usuario(self, rfid_id):
-        endpoint = "/api/User/get"
+        endpoint = "/api/User/get-by-user-email-or-employee-number"
         params = {'id': rfid_id}
         return self.get_request(endpoint, params=params)
 
@@ -92,7 +92,7 @@ def leer_rfid_y_comparar_rostro():
 try:
     while True:
         leer_rfid_y_comparar_rostro()
-        time.sleep(1)  # Puedes ajustar este tiempo según sea necesario
+        time.sleep(5)  # Puedes ajustar este tiempo según sea necesario
 except KeyboardInterrupt:
     print("Interrupción por el usuario, cerrando el programa.")
 finally:
