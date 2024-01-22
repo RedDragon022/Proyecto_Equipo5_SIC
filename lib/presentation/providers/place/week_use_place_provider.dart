@@ -5,7 +5,7 @@ import 'package:teachersguard/domain/entities/entities.dart';
 import '../../../useCases/use_cases.dart';
 
 final weekUsePlaceProvider =
-    StateNotifierProvider<WeekUsePlaceNotifier, WeekUsePlace>((ref) {
+    StateNotifierProvider.autoDispose<WeekUsePlaceNotifier, WeekUsePlace>((ref) {
   return WeekUsePlaceNotifier(placeUseCase);
 });
 
