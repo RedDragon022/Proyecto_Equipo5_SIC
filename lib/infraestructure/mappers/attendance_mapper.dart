@@ -3,7 +3,7 @@ import 'package:teachersguard/infraestructure/models/models.dart';
 
 class AttendanceMapper {
   static Attendance mapAttendanceResponseToAttendanceEntity(
-          AttendanceObject response) =>
+          AttenedanceResponse response) =>
       Attendance(
           id: response.attendanceId,
           entryDate: response.entryDate,

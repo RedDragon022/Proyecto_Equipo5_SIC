@@ -1,14 +1,14 @@
-class AttendanceResponse {
-  final List<AttendanceObject> attendances;
+class AttendancesResponse {
+  final List<AttenedanceResponse> attendances;
 
-  AttendanceResponse({
+  AttendancesResponse({
     required this.attendances,
   });
 
-  factory AttendanceResponse.fromJson(Map<String, dynamic> json) =>
-      AttendanceResponse(
-        attendances: List<AttendanceObject>.from(
-            json["attendances"].map((x) => AttendanceObject.fromJson(x))),
+  factory AttendancesResponse.fromJson(Map<String, dynamic> json) =>
+      AttendancesResponse(
+        attendances: List<AttenedanceResponse>.from(
+            json["attendances"].map((x) => AttenedanceResponse.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -16,7 +16,7 @@ class AttendanceResponse {
       };
 }
 
-class AttendanceObject {
+class AttenedanceResponse {
   final DateTime entryDate;
   final DateTime exitDate;
   final String userId;
@@ -25,7 +25,7 @@ class AttendanceObject {
   final String placeName;
   final String attendanceId;
 
-  AttendanceObject({
+  AttenedanceResponse({
     required this.entryDate,
     required this.exitDate,
     required this.userId,
@@ -35,8 +35,8 @@ class AttendanceObject {
     required this.attendanceId,
   });
 
-  factory AttendanceObject.fromJson(Map<String, dynamic> json) =>
-      AttendanceObject(
+  factory AttenedanceResponse.fromJson(Map<String, dynamic> json) =>
+      AttenedanceResponse(
         entryDate: DateTime.parse(json["entryDate"]),
         exitDate: DateTime.parse(json["exitDate"]),
         userId: json["userId"],

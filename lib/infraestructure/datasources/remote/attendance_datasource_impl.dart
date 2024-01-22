@@ -17,7 +17,7 @@ class AttendanceDatasourceImpl extends AttendanceDatasource {
         throw AttendanceException(json.statusMessage!);
       }
 
-      final response = AttendanceResponse.fromJson(json.data);
+      final response = AttendancesResponse.fromJson(json.data);
 
       final attendances = response.attendances;
 
