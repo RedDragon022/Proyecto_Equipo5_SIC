@@ -13,11 +13,16 @@ class PlaceListNotifier extends StateNotifier<List<Place>> {
   final PlaceUseCase _placeUseCase;
   PlaceListNotifier(this._placeUseCase) : super([]);
 
+  bool isLoading = true;
+
   Future<void> getAllPlaces() async {
+    if (state.isNotEmpty) return;
     try {
       state = await _placeUseCase.getAllPlaces();
+      isLoading = false;
     } on PlaceException catch (_) {
       state = [];
+      isLoading = false;
     }
   }
 }

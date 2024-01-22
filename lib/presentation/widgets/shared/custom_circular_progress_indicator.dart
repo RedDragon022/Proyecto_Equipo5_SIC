@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
-
-class CenterCircularProgressIndicator extends StatelessWidget {
-  const CenterCircularProgressIndicator({
+class CustomCircularProgressIndicator extends StatelessWidget {
+  const CustomCircularProgressIndicator({
     super.key,
-    required this.attendances,
-    required this.totalAttendances,
-    required this.textStyle,
+    required this.counter,
+    required this.total,
+    this.textStyle,
   });
 
-  final int attendances;
-  final int totalAttendances;
+  final int counter;
+  final int total;
   final TextStyle? textStyle;
 
   @override
@@ -26,23 +25,23 @@ class CenterCircularProgressIndicator extends StatelessWidget {
               height: 150.0,
               child: CircularProgressIndicator.adaptive(
                 strokeWidth: 8,
-                value: totalAttendances == 0
+                value: total == 0
                     ? 0
-                    : attendances.toDouble() / totalAttendances.toDouble(),
+                    : counter.toDouble() / total.toDouble(),
                 backgroundColor: Colors.grey,
               ),
             ),
             Text(
-              totalAttendances == 0
+              total == 0
                   ? '0%'
-                  : '${(attendances.toDouble() / totalAttendances.toDouble() * 100).toStringAsFixed(2)}%',
+                  : '${(counter.toDouble() / total.toDouble() * 100).toStringAsFixed(2)}%',
               style: textStyle,
             ),
           ],
         ),
         const SizedBox(height: 15),
         Text(
-          '$attendances/$totalAttendances Asistencias semanales',
+          '$counter/$total Asistencias semanales',
           style: textStyle?.copyWith(fontWeight: FontWeight.w600),
         )
       ],

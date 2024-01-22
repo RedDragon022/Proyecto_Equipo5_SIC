@@ -10,4 +10,5 @@ export 'schedule/custom_schedule.dart';
 export 'shared/buttons/custom_avatar_button.dart';
 export 'register/custom_alert_dialog.dart';
 export 'schedule/custom_schedule_list.dart';
-export 'home/center_circular_progress_indicator.dart';
+export 'shared/custom_circular_progress_indicator.dart';
+export 'stadistics/custom_dropdown_button.dart';

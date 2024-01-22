@@ -38,9 +38,9 @@ class HomeView extends ConsumerWidget {
                 color: primaryColor,
                 size: 100,
               )
-            : CenterCircularProgressIndicator(
-                attendances: weekAttendances.attendances,
-                totalAttendances: weekAttendances.totalAttendances,
+            : CustomCircularProgressIndicator(
+                counter: weekAttendances.attendances,
+                total: weekAttendances.totalAttendances,
                 textStyle: textStyle),
       ],
     );
