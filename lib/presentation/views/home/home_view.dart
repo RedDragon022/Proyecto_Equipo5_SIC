@@ -18,14 +18,11 @@ class HomeView extends ConsumerWidget {
 
     if (user.name.isEmpty) ref.read(userProvider.notifier).getLocalUserAuth();
 
-    ref.watch(weekAttendanceProvider.notifier).getWeekAttendanceByUserId();
-
-    final isLoading = ref.watch(weekAttendanceProvider.notifier).isLoading;
+    ref.read(weekAttendanceProvider.notifier).getWeekAttendanceByUserId();
 
     final weekAttendances = ref.watch(weekAttendanceProvider);
 
-    final attendances = weekAttendances.attendances;
-    final totalAttendances = weekAttendances.totalAttendances;
+    final isLoading = ref.read(weekAttendanceProvider.notifier).isLoading;
 
     final deviceHeight = MediaQuery.of(context).size.height;
 
@@ -42,8 +39,8 @@ class HomeView extends ConsumerWidget {
                 size: 100,
               )
             : CenterCircularProgressIndicator(
-                attendances: attendances,
-                totalAttendances: totalAttendances,
+                attendances: weekAttendances.attendances,
+                totalAttendances: weekAttendances.totalAttendances,
                 textStyle: textStyle),
       ],
     );

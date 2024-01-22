@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:teachersguard/config/dependenciesInjection/container.dart';
 
 import '../../../domain/entities/entities.dart';
-import '../../../infraestructure/errors/errors.dart';
 import '../../../useCases/use_cases.dart';
 
 final weekAttendanceProvider =
