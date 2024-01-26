@@ -12,8 +12,8 @@ class PDFUseCase {
 
   PDFUseCase(this._pdfService);
 
-  Future<void> createStadisticsPDF(List<Place> places) async {
-    var savedFile = await _pdfService.createStatisticsPDF(places);
+  Future<void> createStadisticsPDF(List<Place> places, List<WeekUsePlace> weekUsePlace) async {
+    var savedFile = await _pdfService.createStatisticsPDF(places, weekUsePlace);
     if (kIsWeb) {
       List<int> fileInts = List.from(savedFile);
       html.AnchorElement(
@@ -23,7 +23,7 @@ class PDFUseCase {
             "download", "estadisticas_salones.pdf")
         ..click();
     } else {
-      final file = File("example.pdf");
+      final file = File("estadisticas_salones.pdf");
       await file.writeAsBytes(savedFile);
     }
   }

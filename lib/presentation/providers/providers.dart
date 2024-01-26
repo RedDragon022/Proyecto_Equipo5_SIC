@@ -7,3 +7,4 @@ export '../providers/forms/register_form_provider.dart';
 export '../providers/attendance/week_attendance_provider.dart';
 export '../providers/place/place_list_provider.dart';
 export '../providers/place/week_use_place_provider.dart';
+export '../providers/place/week_use_place_list_provider.dart';

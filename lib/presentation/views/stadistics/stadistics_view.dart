@@ -83,6 +83,8 @@ class _Header extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.read(weekUsePlaceListProvider.notifier).getWeekUsePlaceList(places);
+    final weekUsePlaces = ref.watch(weekUsePlaceListProvider);
     return Row(
       children: [
         SizedBox(
@@ -98,12 +100,14 @@ class _Header extends ConsumerWidget {
               }),
         ),
         const SizedBox(width: 20),
-        TextButton.icon(
-            onPressed: () async {
-              await pdfUseCase.createStadisticsPDF(places);
-            },
-            icon: const Icon(Icons.download),
-            label: const Text('Descargar PDF de registro de todos los salones'))
+        Flexible(
+          child: TextButton.icon(
+              onPressed: () async {
+                await pdfUseCase.createStadisticsPDF(places, weekUsePlaces);
+              },
+              icon: const Icon(Icons.download),
+              label: const Text('Descargar PDF de registro de todos los salones')),
+        )
       ],
     );
   }

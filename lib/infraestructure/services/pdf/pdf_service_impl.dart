@@ -11,7 +11,8 @@ class PDFServiceImpl extends PDFService {
   final _pdf = pw.Document();
 
   @override
-  Future<Uint8List> createStatisticsPDF(List<Place> places) async {
+  Future<Uint8List> createStatisticsPDF(
+      List<Place> places, List<WeekUsePlace> weekUsePlace) async {
     // Utiliza una fuente de Google que admita caracteres Unicode
     final font =
         await rootBundle.load("lib/assets/fonts/poppins/Poppins-Regular.ttf");
@@ -50,48 +51,68 @@ class PDFServiceImpl extends PDFService {
                   style: textStyle),
               pw.SizedBox(height: 10),
               pw.ListView.separated(
-                  itemBuilder: (context, index) => pw.Column(
-                          mainAxisAlignment: pw.MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: pw.CrossAxisAlignment.start,
-                          children: [
-                            pw.Container(
-                                decoration: decoration,
-                                width: double.infinity,
-                                height: 20,
-                                alignment: pw.Alignment.center,
-                                child: pw.Text(places[index].name,
-                                    style: textStyle.copyWith(
-                                        color: PdfColors.white))),
-                            pw.SizedBox(height: 10),
-                            pw.Row(
+                  itemBuilder: (context, index) {
+                    final currentWeekPlace = weekUsePlace[index];
+                    final currentPlace = places[index];
+                    final currentValueProgressIndicator =
+                        currentWeekPlace.total == 0
+                            ? 0
+                            : currentWeekPlace.counter.toDouble() /
+                                currentWeekPlace.total.toDouble();
+                    final currenPorcent = currentWeekPlace.total == 0
+                        ? '0%'
+                        : '${(currentWeekPlace.counter.toDouble() /currentWeekPlace.total.toDouble() * 100).toStringAsFixed(2)}%';
+
+                    return pw.Column(
+                        mainAxisAlignment: pw.MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: pw.CrossAxisAlignment.start,
+                        children: [
+                          pw.Container(
+                              decoration: decoration,
+                              width: double.infinity,
+                              height: 20,
+                              alignment: pw.Alignment.center,
+                              child: pw.Text(currentPlace.name,
+                                  style: textStyle.copyWith(
+                                      color: PdfColors.white))),
+                          pw.SizedBox(height: 10),
+                          pw.Row(
                               crossAxisAlignment: pw.CrossAxisAlignment.start,
                               children: [
-                              pw.Stack(
-                                  alignment: pw.Alignment.center,
-                                  children: [
-                                    pw.SizedBox(
-                                      width: 120.0,
-                                      height: 120.0,
-                                      child: pw.CircularProgressIndicator(
-                                          strokeWidth: 4,
-                                          value: 0,
-                                          backgroundColor: PdfColors.grey,
-                                          color: primaryColor),
-                                    ),
-                                    pw.Text('50%', style: textStyle)
-                                  ]),
-                              pw.SizedBox(width: 50),
-                              pw.Column(
-                                mainAxisAlignment: pw.MainAxisAlignment.start,
-                                crossAxisAlignment: pw.CrossAxisAlignment.start,
-                                children: [
-                                pw.SizedBox(height: 10),
-                                pw.Text('Total de asistencias hechas: ', style: textStyle),
-                                pw.SizedBox(height: 5),
-                                pw.Text('Total de asistencias registradas: ', style: textStyle)
-                              ])
-                            ]),
-                          ]),
+                                pw.Stack(
+                                    alignment: pw.Alignment.center,
+                                    children: [
+                                      pw.SizedBox(
+                                        width: 120.0,
+                                        height: 120.0,
+                                        child: pw.CircularProgressIndicator(
+                                            strokeWidth: 4,
+                                            value: currentValueProgressIndicator
+                                                .toDouble(),
+                                            backgroundColor: PdfColors.grey,
+                                            color: primaryColor),
+                                      ),
+                                      pw.Text(currenPorcent, style: textStyle)
+                                    ]),
+                                pw.SizedBox(width: 50),
+                                pw.Column(
+                                    mainAxisAlignment:
+                                        pw.MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        pw.CrossAxisAlignment.start,
+                                    children: [
+                                      pw.SizedBox(height: 10),
+                                      pw.Text(
+                                          'Total de asistencias hechas: ${currentWeekPlace.counter}',
+                                          style: textStyle),
+                                      pw.SizedBox(height: 5),
+                                      pw.Text(
+                                          'Total de asistencias registradas: ${currentWeekPlace.total}',
+                                          style: textStyle)
+                                    ])
+                              ]),
+                        ]);
+                  },
                   separatorBuilder: (context, index) => pw.SizedBox(height: 10),
                   itemCount: places.length)
             ]);
