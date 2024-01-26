@@ -25,7 +25,7 @@ class CustomCircularProgressIndicator extends StatelessWidget {
             SizedBox(
               width: 150.0,
               height: 150.0,
-              child: CircularProgressIndicator.adaptive(
+              child: CircularProgressIndicator(
                 strokeWidth: 8,
                 value: total == 0 ? 0 : counter.toDouble() / total.toDouble(),
                 backgroundColor: Colors.grey,

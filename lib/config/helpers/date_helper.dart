@@ -11,12 +11,18 @@ class DateHelper {
     return formattedTime;
   }
 
-  static String convertTo12HourFormat(DateTime time24hour){
-   return DateFormat('hh:mm a').format(time24hour.toLocal());
+  static String convertTo12HourFormat(DateTime time24hour) {
+    return DateFormat('hh:mm a').format(time24hour.toLocal());
   }
 
-  static String convertDateTimeToDateTimeOnly(DateTime dateTime){
+  static String convertDateTimeToDateTimeOnly(DateTime dateTime) {
     return DateFormat('dd/MM/yyyy').format(dateTime);
+  }
 
+  static String formatCurrentDatePDF() {
+    DateTime now = DateTime.now();
+    final String day = convertDateTimeToDateTimeOnly(now);
+    final String hour = convertTo12HourFormat(now);
+    return '$day - $hour';
   }
 }

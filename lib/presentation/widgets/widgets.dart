@@ -12,3 +12,4 @@ export 'register/custom_alert_dialog.dart';
 export 'schedule/custom_schedule_list.dart';
 export 'shared/custom_circular_progress_indicator.dart';
 export 'stadistics/custom_dropdown_button.dart';
+export 'package:loading_animation_widget/loading_animation_widget.dart';

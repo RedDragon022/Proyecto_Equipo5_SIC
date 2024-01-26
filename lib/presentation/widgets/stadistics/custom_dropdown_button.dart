@@ -18,6 +18,8 @@ class CustomDropdownButton extends StatelessWidget {
     final decoration = CustomDropdownDecoration(
         closedFillColor: Colors.grey.shade300,
         expandedFillColor: Colors.grey.shade100,
+        listItemStyle: textStyle.labelLarge?.copyWith(color: Colors.black),
+        headerStyle: textStyle.labelLarge?.copyWith(color: Colors.black),
         hintStyle: textStyle.labelLarge
             ?.copyWith(color: Colors.black, fontWeight: FontWeight.w500));
 

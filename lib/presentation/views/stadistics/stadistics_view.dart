@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
-
-import 'package:teachersguard/presentation/providers/place/place_list_provider.dart';
-import 'package:teachersguard/presentation/providers/place/week_use_place_provider.dart';
-import 'package:teachersguard/presentation/widgets/widgets.dart';
+import 'package:teachersguard/config/dependenciesInjection/container.dart';
+import '../../../presentation/providers/providers.dart';
+import '../../../presentation/widgets/widgets.dart';
 
 import '../../../domain/entities/entities.dart';
 
@@ -56,25 +54,56 @@ class _WidgetsLoaded extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final place = ref.watch(weekUsePlaceProvider);
 
-     final place = ref.watch(weekUsePlaceProvider);
+    final deviceWidth = MediaQuery.of(context).size.width;
+
     return Column(
       children: [
-        CustomDropdownButton(
-            items: places.map((place) => place.name).toList(),
-            onChanged: (value) {
-              final place =
-                  places.firstWhere((place) => place.name.contains(value));
-              ref
-                  .read(weekUsePlaceProvider.notifier)
-                  .getWeekUsePlaceByPlaceId(place.id);
-            }),
+        _Header(deviceWidth: deviceWidth, places: places),
         SizedBox(height: sizeBoxHeight),
         CustomCircularProgressIndicator(
           counter: place.counter,
-          total:  place.total,
-          label: 'Porcentaje de uso semanal',
+          total: place.total,
+          label: 'Porcentaje de uso',
         )
+      ],
+    );
+  }
+}
+
+class _Header extends ConsumerWidget {
+  const _Header({
+    required this.deviceWidth,
+    required this.places,
+  });
+
+  final double deviceWidth;
+  final List<Place> places;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Row(
+      children: [
+        SizedBox(
+          width: deviceWidth / 2,
+          child: CustomDropdownButton(
+              items: places.map((place) => place.name).toList(),
+              onChanged: (value) {
+                final place =
+                    places.firstWhere((place) => place.name.contains(value));
+                ref
+                    .read(weekUsePlaceProvider.notifier)
+                    .getWeekUsePlaceByPlaceId(place.id);
+              }),
+        ),
+        const SizedBox(width: 20),
+        TextButton.icon(
+            onPressed: () async {
+              await pdfUseCase.createStadisticsPDF(places);
+            },
+            icon: const Icon(Icons.download),
+            label: const Text('Descargar PDF de registro de todos los salones'))
       ],
     );
   }

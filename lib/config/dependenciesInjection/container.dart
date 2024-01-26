@@ -1,6 +1,5 @@
 import 'package:teachersguard/infraestructure/datasources/datasources.dart';
 import 'package:teachersguard/infraestructure/services/services.dart';
-import 'package:teachersguard/useCases/place/place_use_case.dart';
 import 'package:teachersguard/useCases/use_cases.dart';
 import '../../infraestructure/repositories/repositories.dart';
 
@@ -16,9 +15,11 @@ final placeRepository = PlaceRepositoryImpl(placeDatasource);
 
 final cameraService = CameraServiceImpl();
 final localStorageService = LocalStorageServiceImpl();
+final pdfService = PDFServiceImpl();
 
 final authUseCase = AuthUseCase(authRepository, localStorageService);
 final cameraUseCase = CameraUseCase(cameraService);
 final scheduleUseCase = ScheduleUseCase(scheduleRepository);
 final attendanceUseCase = AttendanceUseCase(attendanceRepository);
 final placeUseCase = PlaceUseCase(placeRepository);
+final pdfUseCase = PDFUseCase(pdfService);

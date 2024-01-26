@@ -34,7 +34,7 @@ class CustomTextField extends StatelessWidget {
 
     final decoration = InputDecoration(
         filled: true,
-        fillColor: const Color(0xFFD9D9D9),
+        fillColor: Colors.grey.shade500,
         border: border,
         errorBorder: errorBorder,
         labelStyle: labelStyle?.copyWith(fontWeight: FontWeight.w600),
