@@ -30,7 +30,12 @@ class TeachersGuardAPI:
         url = f"{self.base_url}{endpoint}"
         response = requests.get(url, params=params)
         return response
-
+    
+    def registrar_salida(self, usuario_id):
+        endpoint = "/api/Attendance/register-exit"
+        params = {'userId': usuario_id}
+        return self.post_request(endpoint, params=params)
+    
     def registrar_entrada(self, usuario_id):
         endpoint = "/api/Attendance/register-entry"
         params = {'userId': usuario_id}
