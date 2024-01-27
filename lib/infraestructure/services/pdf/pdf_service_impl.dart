@@ -8,11 +8,10 @@ import 'package:pdf/widgets.dart' as pw;
 import '../../../domain/entities/entities.dart';
 
 class PDFServiceImpl extends PDFService {
-  final _pdf = pw.Document();
-
   @override
   Future<Uint8List> createStatisticsPDF(
       List<Place> places, List<WeekUsePlace> weekUsePlace) async {
+    final pdf = pw.Document();
     // Utiliza una fuente de Google que admita caracteres Unicode
     final font =
         await rootBundle.load("lib/assets/fonts/poppins/Poppins-Regular.ttf");
@@ -24,7 +23,7 @@ class PDFServiceImpl extends PDFService {
     final textStyle = pw.TextStyle(font: ttf);
     final primaryColor = PdfColor.fromHex('#B356FF');
 
-    _pdf.addPage(
+    pdf.addPage(
       pw.Page(build: (pw.Context context) {
         final decoration = pw.BoxDecoration(
             color: PdfColors.black, borderRadius: pw.BorderRadius.circular(10));
@@ -61,7 +60,7 @@ class PDFServiceImpl extends PDFService {
                                 currentWeekPlace.total.toDouble();
                     final currenPorcent = currentWeekPlace.total == 0
                         ? '0%'
-                        : '${(currentWeekPlace.counter.toDouble() /currentWeekPlace.total.toDouble() * 100).toStringAsFixed(2)}%';
+                        : '${(currentWeekPlace.counter.toDouble() / currentWeekPlace.total.toDouble() * 100).toStringAsFixed(2)}%';
 
                     return pw.Column(
                         mainAxisAlignment: pw.MainAxisAlignment.spaceEvenly,
@@ -119,6 +118,6 @@ class PDFServiceImpl extends PDFService {
       }),
     );
 
-    return _pdf.save();
+    return pdf.save();
   }
 }

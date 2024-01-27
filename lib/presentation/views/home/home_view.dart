@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../providers/providers.dart';
 import '../../widgets/widgets.dart';
@@ -16,16 +15,13 @@ class HomeView extends ConsumerWidget {
 
     final user = ref.watch(userProvider);
 
-    if (user.name.isEmpty) ref.read(userProvider.notifier).getLocalUserAuth();
+    final weekAttendances = ref.read(weekAttendanceProvider);
 
-    ref.read(weekAttendanceProvider.notifier).getWeekAttendanceByUserId();
+    final isLoading = ref.read(weekAttendanceProvider.notifier).isLoading;
 
-    final weekAttendances = ref.watch(weekAttendanceProvider);
-
-    final isLoading = ref.watch(weekAttendanceProvider.notifier).isLoading;
+     ref.read(weekAttendanceProvider.notifier).getWeekAttendanceByUserId();
 
     final deviceHeight = MediaQuery.of(context).size.height;
-
 
     return Column(
       children: [
