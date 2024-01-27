@@ -4,23 +4,36 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/providers.dart';
 import '../../widgets/widgets.dart';
 
-class HomeView extends ConsumerWidget {
+class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends ConsumerState<HomeView> {
+
+  @override
+  void initState() {
+    super.initState();
+    ref.read(weekAttendanceProvider.notifier).getWeekAttendanceByUserId();
+  }
+
+  @override
+  void dispose() {
+    
+    super.dispose();
+  }
+  @override
+  Widget build(BuildContext context) {
     final textStyle = Theme.of(context).textTheme.titleLarge;
     final primaryColor = Theme.of(context).primaryColor;
+    final deviceHeight = MediaQuery.of(context).size.height;
 
     final user = ref.watch(userProvider);
 
-    final weekAttendances = ref.read(weekAttendanceProvider);
-
-    final isLoading = ref.watch(weekAttendanceProvider.notifier).isLoading;
-
-    ref.read(weekAttendanceProvider.notifier).getWeekAttendanceByUserId();
-
-    final deviceHeight = MediaQuery.of(context).size.height;
+    final weekAttendances = ref.watch(weekAttendanceProvider);
+    
 
     return Column(
       children: [
@@ -29,7 +42,7 @@ class HomeView extends ConsumerWidget {
           imageUrl: user.imageProfile,
         ),
         SizedBox(height: deviceHeight / 4),
-        (isLoading)
+        (ref.read(weekAttendanceProvider.notifier).isLoading)
             ? LoadingAnimationWidget.fourRotatingDots(
                 color: primaryColor,
                 size: 100,

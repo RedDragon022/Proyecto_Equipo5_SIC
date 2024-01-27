@@ -106,7 +106,7 @@ class PDFServiceImpl extends PDFService {
                                           style: textStyle),
                                       pw.SizedBox(height: 5),
                                       pw.Text(
-                                          'Total de asistencias registradas: ${currentWeekPlace.total}',
+                                          'Total de asistencias esperadas para esta semana: ${currentWeekPlace.total}',
                                           style: textStyle)
                                     ])
                               ]),
