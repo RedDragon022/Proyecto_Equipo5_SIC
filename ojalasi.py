@@ -1,12 +1,12 @@
 import requests
 import cv2
+import os 
 from mtcnn.mtcnn import MTCNN
-from gpiozero import LED
+from gpiozero import LED, Button
 import base64
 from PIL import Image
 from io import BytesIO
 from mfrc522 import SimpleMFRC522
-import RPi.GPIO as GPIO
 import time
 import numpy as np
 
@@ -18,7 +18,7 @@ led_verde = LED(27)
 reader = SimpleMFRC522()
 
 class TeachersGuardAPI:
-    def __init__(self, base_url):
+    def __init__(self, base_url): 
         self.base_url = base_url
 
     def post_request(self, endpoint, data=None, params=None):
@@ -90,8 +90,7 @@ def leer_rfid_y_comparar_rostro():
             led_verde.off()
             led_rojo.on()
     finally:
-        GPIO.cleanup()
-
+        pass  # GPIO cleanup is not needed with gpiozero
 
 # Llamada al método leer_rfid en un bucle
 try:
@@ -101,8 +100,7 @@ try:
 except KeyboardInterrupt:
     print("Interrupción por el usuario, cerrando el programa.")
 finally:
-    GPIO.cleanup()
-    print("GPIO limpio. Programa terminado.")
+    print("Programa terminado.")
 
 #--------------------------- Función para registrar el usuario con reconocimiento facial ----------------------
 def decodificar_imagen_base64(face_image_base64):
@@ -160,10 +158,11 @@ def comparar_rostros(rostro_capturado, rostro_api):
     # Calcular la similitud basada en los matches
     regiones_similares = [i for i in matches if i.distance < 70]
     if len(matches) == 0:
-        similitud = 0
+        parecido= 0
     else:
-        similitud = len(regiones_similares) / len(matches)
+        parecido = len(regiones_similares) / len(matches)
 
     # Determinar si la similitud es suficiente para considerar que los rostros coinciden
-    return similitud >= 0.75
+    return parecido>=0.75
+
 
