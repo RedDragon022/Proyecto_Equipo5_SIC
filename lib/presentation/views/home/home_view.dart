@@ -12,7 +12,6 @@ class HomeView extends ConsumerStatefulWidget {
 }
 
 class _HomeViewState extends ConsumerState<HomeView> {
-
   @override
   void initState() {
     super.initState();
@@ -21,9 +20,9 @@ class _HomeViewState extends ConsumerState<HomeView> {
 
   @override
   void dispose() {
-    
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     final textStyle = Theme.of(context).textTheme.titleLarge;
@@ -32,8 +31,9 @@ class _HomeViewState extends ConsumerState<HomeView> {
 
     final user = ref.watch(userProvider);
 
+    if (user.id.isEmpty) ref.read(userProvider.notifier).getLocalUserAuth();
+
     final weekAttendances = ref.watch(weekAttendanceProvider);
-    
 
     return Column(
       children: [
