@@ -15,6 +15,7 @@ class UserNotifier extends StateNotifier<User> {
   UserNotifier(this._authUseCase) : super(User());
 
   Future<void> login(String emailOrEmployeeNumber, String password) async {
+    if (state.id.isNotEmpty) return;
     try {
       final auth = await _authUseCase.getLocalAuth();
 
@@ -25,7 +26,6 @@ class UserNotifier extends StateNotifier<User> {
       } else {
         state = auth;
       }
-    
     } on AuthException catch (e) {
       throw AuthException(e.message);
     }

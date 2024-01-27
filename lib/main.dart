@@ -22,8 +22,7 @@ class MainApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
-
-    
+        
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: theme.getTheme(),

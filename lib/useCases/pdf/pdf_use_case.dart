@@ -25,11 +25,11 @@ class PDFUseCase {
         ..setAttribute("download", "estadisticas_salones.pdf")
         ..click();
     } else {
-      final output = await getApplicationDocumentsDirectory();
-      final path = "${output.path}/estadisticas_salones.pdf";
+      final output = await getDownloadsDirectory();
+      final path = "${output?.path}/estadisticas_salones.pdf";
       final file = File(path);
+
       await file.writeAsBytes(savedFile);
-       
       await OpenFile.open(path);
     }
   }

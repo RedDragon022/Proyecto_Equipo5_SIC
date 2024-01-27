@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
 import '../../providers/providers.dart';
 import '../../widgets/widgets.dart';
 
@@ -17,9 +16,9 @@ class HomeView extends ConsumerWidget {
 
     final weekAttendances = ref.read(weekAttendanceProvider);
 
-    final isLoading = ref.read(weekAttendanceProvider.notifier).isLoading;
+    final isLoading = ref.watch(weekAttendanceProvider.notifier).isLoading;
 
-     ref.read(weekAttendanceProvider.notifier).getWeekAttendanceByUserId();
+    ref.read(weekAttendanceProvider.notifier).getWeekAttendanceByUserId();
 
     final deviceHeight = MediaQuery.of(context).size.height;
 
