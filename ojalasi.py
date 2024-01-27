@@ -49,59 +49,6 @@ class TeachersGuardAPI:
 # Instancia de la API
 api = TeachersGuardAPI("https://teachersguard.azurewebsites.net")
 
-
-def leer_rfid_y_comparar_rostro():
-    try:
-        print("Acerque su tarjeta al lector...")
-        id, text = reader.read()
-        print(f"ID de la tarjeta RFID: {id}")
-        respuesta_usuario = api.obtener_usuario(rfid_id=str(id))
-        if respuesta_usuario.status_code == 200:
-            datos_usuario = respuesta_usuario.json()
-            face_image_base64 = datos_usuario.get('faceImage', '')
-            if face_image_base64:
-                rostro_api = decodificar_imagen_base64(face_image_base64)
-                rostro_capturado = capturar_rostro()
-                if rostro_capturado is not None:
-                    if comparar_rostros(rostro_capturado, rostro_api):
-                        print("Los rostros coinciden.")
-                        led_verde.on()
-                        led_rojo.off()
-                        # Registro de la entrada
-                        resultado_entrada = api.registrar_entrada(id)
-                        if resultado_entrada.status_code == 200:
-                            print("Entrada registrada correctamente en la API.")
-                        else:
-                            print("Error al registrar entrada en la API:", resultado_entrada.status_code)
-                    else:
-                        print("Los rostros no coinciden.")
-                        led_verde.off()
-                        led_rojo.on()
-                else:
-                    print("No se pudo capturar un rostro.")
-                    led_verde.off()
-                    led_rojo.on()
-            else:
-                print("No se encontró imagen para el usuario en la API.")
-                led_verde.off()
-                led_rojo.on()
-        else:
-            print("Error al obtener la información del usuario:", respuesta_usuario.status_code)
-            led_verde.off()
-            led_rojo.on()
-    finally:
-        pass  # GPIO cleanup is not needed with gpiozero
-
-# Llamada al método leer_rfid en un bucle
-try:
-    while True:
-        leer_rfid_y_comparar_rostro()
-        time.sleep(5)  # Puedes ajustar este tiempo según sea necesario
-except KeyboardInterrupt:
-    print("Interrupción por el usuario, cerrando el programa.")
-finally:
-    print("Programa terminado.")
-
 #--------------------------- Función para registrar el usuario con reconocimiento facial ----------------------
 def decodificar_imagen_base64(face_image_base64):
     image_data = base64.b64decode(face_image_base64)
@@ -165,4 +112,53 @@ def comparar_rostros(rostro_capturado, rostro_api):
     # Determinar si la similitud es suficiente para considerar que los rostros coinciden
     return parecido>=0.75
 
-
+def leer_rfid_y_comparar_rostro():
+    try:
+        print("Acerque su tarjeta al lector...")
+        id, text = reader.read()
+        print(f"ID de la tarjeta RFID: {id}")
+        respuesta_usuario = api.obtener_usuario(rfid_id=str(id))
+        if respuesta_usuario.status_code == 200:
+            datos_usuario = respuesta_usuario.json()
+            face_image_base64 = datos_usuario.get('faceImage', '')
+            if face_image_base64:
+                rostro_api = decodificar_imagen_base64(face_image_base64)
+                rostro_capturado = capturar_rostro()
+                if rostro_capturado is not None:
+                    if comparar_rostros(rostro_capturado, rostro_api):
+                        print("Los rostros coinciden.")
+                        led_verde.on()
+                        led_rojo.off()
+                        # Registro de la entrada
+                        resultado_entrada = api.registrar_entrada(id)
+                        if resultado_entrada.status_code == 200:
+                            print("Entrada registrada correctamente en la API.")
+                        else:
+                            print("Error al registrar entrada en la API:", resultado_entrada.status_code)
+                    else:
+                        print("Los rostros no coinciden.")
+                        led_verde.off()
+                        led_rojo.on()
+                else:
+                    print("No se pudo capturar un rostro.")
+                    led_verde.off()
+                    led_rojo.on()
+            else:
+                print("No se encontró imagen para el usuario en la API.")
+                led_verde.off()
+                led_rojo.on()
+        else:
+            print("Error al obtener la información del usuario:", respuesta_usuario.status_code)
+            led_verde.off()
+            led_rojo.on()
+    finally:
+        pass  # GPIO cleanup is not needed with gpiozero
+# Llamada al método leer_rfid en un bucle
+try:
+    while True:
+        leer_rfid_y_comparar_rostro()
+        time.sleep(5)  # Puedes ajustar este tiempo según sea necesario
+except KeyboardInterrupt:
+    print("Interrupción por el usuario, cerrando el programa.")
+finally:
+    print("Programa terminado.")
