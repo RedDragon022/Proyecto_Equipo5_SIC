@@ -36,9 +36,9 @@ class TeachersGuardAPI:
         params = {'userId': usuario_id}
         return self.post_request(endpoint, params=params)
     
-    def registrar_entrada(self, usuario_id):
+    def registrar_entrada(self, id):
         endpoint = "/api/Attendance/register-entry"
-        params = {'userId': usuario_id}
+        params = {'userId': id}
         return self.post_request(endpoint, params=params)
 
     def obtener_usuario(self, rfid_id):
@@ -121,9 +121,11 @@ def leer_rfid_y_comparar_rostro():
         if respuesta_usuario.status_code == 200:
             datos_usuario = respuesta_usuario.json()
             face_image_base64 = datos_usuario.get('faceImage', '')
+            print("imagen decodificada")
             if face_image_base64:
                 rostro_api = decodificar_imagen_base64(face_image_base64)
                 rostro_capturado = capturar_rostro()
+                print("rostro capturado")
                 if rostro_capturado is not None:
                     if comparar_rostros(rostro_capturado, rostro_api):
                         print("Los rostros coinciden.")
@@ -152,8 +154,7 @@ def leer_rfid_y_comparar_rostro():
             led_verde.off()
             led_rojo.on()
     finally:
-        pass  # GPIO cleanup is not needed with gpiozero
-# Llamada al método leer_rfid en un bucle
+        pass  
 try:
     while True:
         leer_rfid_y_comparar_rostro()
