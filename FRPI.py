@@ -14,9 +14,7 @@ import numpy as np
 led_rojo = LED(17)
 led_verde = LED(27)
 
-# Configurar el botón
-boton_salida = Button(2)  # Asegúrate de que el pin 2 esté disponible y conectado al botón
-
+debe_registrar_salida = False
 # Instancia del lector RFID
 reader = SimpleMFRC522()
 
@@ -51,14 +49,6 @@ class TeachersGuardAPI:
 
 # Instancia de la API
 api = TeachersGuardAPI("https://teachersguard.azurewebsites.net")
-
-
-# Función llamada cuando se presiona el botón
-def manejar_boton_presionado():
-    leer_rfid_y_comparar_rostro(registrar_salida=True)
-
-# Asignar la función al evento when_pressed del botón
-boton_salida.when_pressed = manejar_boton_presionado
 
 #--------------------------- Función para decodificar imagen base64 ----------------------
 def decodificar_imagen_base64(face_image_base64):
@@ -125,8 +115,9 @@ def comparar_rostros(rostro_capturado, rostro_api):
     # Determinar si la similitud es suficiente para considerar que los rostros coinciden
     return parecido >= 0.75
 
-#--------------------------- Función principal para leer RFID y comparar rostros ----------------------
-def leer_rfid_y_comparar_rostro(registrar_salida=False):
+#------------------------------------------Funcion para leer y validar los rostros---------------------------------------------------
+def leer_rfid_y_comparar_rostro():
+    global debe_registrar_salida
     try:
         print("Acerque su tarjeta al lector...")
         id, text = reader.read()
@@ -145,13 +136,13 @@ def leer_rfid_y_comparar_rostro(registrar_salida=False):
                         print("Los rostros coinciden.")
                         led_verde.on()
                         led_rojo.off()
-                        # Registro de la entrada o salida
-                        if registrar_salida:
+                        if debe_registrar_salida:
                             resultado = api.registrar_salida(usuario_id=str(id))
                             accion = "Salida"
                         else:
                             resultado = api.registrar_entrada(usuario_id=str(id))
                             accion = "Entrada"
+                            debe_registrar_salida = not debe_registrar_salida  # Alternar estado
                         if resultado.status_code == 200:
                             print(f"{accion} registrada correctamente en la API.")
                         else:
@@ -173,14 +164,8 @@ def leer_rfid_y_comparar_rostro(registrar_salida=False):
             led_verde.off()
             led_rojo.on()
     finally:
-        pass
-
-# Función llamada cuando se presiona el botón
-def manejar_boton_presionado():
-    leer_rfid_y_comparar_rostro(registrar_salida=True)
-
-# Asignar la función al evento when_pressed del botón
-boton_salida.when_pressed = manejar_boton_presionado
+        led_verde.off()
+        led_rojo.off()
 
 # Bucle principal
 try:
@@ -193,4 +178,3 @@ except KeyboardInterrupt:
 finally:
     led_verde.off()
     led_rojo.off()
-    print("Programa terminado.")
