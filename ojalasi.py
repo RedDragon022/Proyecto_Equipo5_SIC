@@ -11,8 +11,8 @@ import time
 import numpy as np
 
 # Configuramos los LEDs
-led_rojo = LED(5)
-led_verde = LED(11)
+led_rojo = LED(17)
+led_verde = LED(27)
 
 # Instancia del lector RFID
 reader = SimpleMFRC522()
@@ -43,7 +43,7 @@ class TeachersGuardAPI:
 
     def obtener_usuario(self, rfid_id):
         endpoint = "/api/User/get-by-user-email-or-employee-number"
-        params = {'id': rfid_id}
+        params = {'emailOrEmployeeNumber': rfid_id}
         return self.get_request(endpoint, params=params)
 
 # Instancia de la API
