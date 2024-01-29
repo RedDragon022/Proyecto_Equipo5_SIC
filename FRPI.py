@@ -36,12 +36,12 @@ class TeachersGuardAPI:
     
     def registrar_salida(self, usuario_id):
         endpoint = "/api/Attendance/register-exit"
-        params = {'userId': usuario_id}
+        params = {'emailOrEmployeeNumber': usuario_id}
         return self.post_request(endpoint, params=params)
     
-    def registrar_entrada(self, usuario_Id):
+    def registrar_entrada(self, usuario_id):
         endpoint = "/api/Attendance/register-entry"
-        params = {'userId': usuario_Id}
+        params = {'emailOrEmployeeNumber': usuario_id}
         return self.post_request(endpoint, params=params)
 
     def obtener_usuario(self, rfid_id):
@@ -147,10 +147,10 @@ def leer_rfid_y_comparar_rostro(registrar_salida=False):
                         led_rojo.off()
                         # Registro de la entrada o salida
                         if registrar_salida:
-                            resultado = api.registrar_salida(id)
+                            resultado = api.registrar_salida(usuario_id=str(id))
                             accion = "Salida"
                         else:
-                            resultado = api.registrar_entrada(id)
+                            resultado = api.registrar_entrada(usuario_id=str(id))
                             accion = "Entrada"
                         if resultado.status_code == 200:
                             print(f"{accion} registrada correctamente en la API.")
@@ -193,4 +193,4 @@ except KeyboardInterrupt:
 finally:
     led_verde.off()
     led_rojo.off()
-    print("Programa terminadon.")
+    print("Programa terminado.")
